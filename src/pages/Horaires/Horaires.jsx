@@ -1,10 +1,11 @@
 import React from 'react'
 
-const Horaires = ({ navigation }) => {
+const Horaires = () => {
 
     return (
-        <>
-        </>
+        <div>
+            Horaires
+        </div>
     )
 }
 

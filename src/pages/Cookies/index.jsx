@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Cookies = () => {
+const Confidentialite = () => {
   return (
     <div className='rights'>
       <h2>Charte de confidentialité</h2>
@@ -35,4 +35,4 @@ const Cookies = () => {
   )
 }
 
-export default Cookies
+export default Confidentialite

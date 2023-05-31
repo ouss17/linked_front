@@ -3,14 +3,22 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom";
-
+import { Provider as ReduxProvider } from "react-redux";
+import faviconLogo from "./faviconLogo.png";
+import { Helmet } from "react-helmet";
+import { store } from "./Redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <ReduxProvider store={store}>
+      <Router>
+        <Helmet>
+          <link rel="icon" type="image/png" href={faviconLogo} />
+        </Helmet>
+        <App />
+      </Router>
+    </ReduxProvider>
   </React.StrictMode>
 );
 

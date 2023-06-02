@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Actus, Gear, Home, Marker, Masjid, Media } from '../../assets/Svg/Svg'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Menu = () => {
+    const location = useLocation();
     const [menuActive, setMenuActive] = useState('/');
     const [arrayMenu, setArrayMenu] = useState([
         {
@@ -41,6 +42,45 @@ const Menu = () => {
     }
 
     useEffect(() => {
+        let currentId = null;
+        switch (location.pathname) {
+            case "/actus":
+                setMenuActive("actus");
+                currentId = document.getElementById("actus");
+                document.getElementById('indicator').style.transition = 'all 500ms';
+                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+                break;
+            case "/medias":
+                setMenuActive("medias");
+                currentId = document.getElementById("medias");
+                document.getElementById('indicator').style.transition = 'all 500ms';
+                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+                break;
+            case "/":
+                setMenuActive("/");
+                currentId = document.getElementById("horaires");
+                document.getElementById('indicator').style.transition = 'all 500ms';
+                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+                break;
+            case "/localisation":
+                setMenuActive("localisation");
+                currentId = document.getElementById("localisation");
+                document.getElementById('indicator').style.transition = 'all 500ms';
+                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+                break;
+            case "/settings":
+                setMenuActive("settings");
+                currentId = document.getElementById("settings");
+                document.getElementById('indicator').style.transition = 'all 500ms';
+                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+                break;
+
+            default:
+                break;
+        }
+    }, [location]);
+
+    useEffect(() => {
         setArrayMenu([
             {
                 id: "actus",
@@ -69,7 +109,6 @@ const Menu = () => {
             },
         ])
     }, [menuActive]);
-
 
 
     return (

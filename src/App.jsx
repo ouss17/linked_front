@@ -33,8 +33,15 @@ import GetActus from "./pages/Actus/GetActus";
 import Settings from "./pages/Settings";
 import Layout from "./components/Layout";
 
+import { useDispatch, useSelector } from "react-redux";
+
+
 import './App.css';
 import Confidentialite from "./pages/Cookies";
+import { GetEtablissementConfig } from "./Redux/actions/EtablissementConfigAction";
+import { GetEtablissement } from "./Redux/actions/EtablissementAction";
+import { GetActusByEtablissement } from "./Redux/actions/ActusAction";
+import { GetCategoriesActive } from "./Redux/actions/CategoryAction";
 
 const App = () => {
   const config = {
@@ -105,6 +112,17 @@ const App = () => {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(GetEtablissement(1)).then(() => {
+      dispatch(GetEtablissementConfig(1)).then(() => {
+        dispatch(GetActusByEtablissement(1)).then(() => {
+          dispatch(GetCategoriesActive(1))
+        })
+      })
+    })
+  }, []);
 
   useEffect(() => {
     let serverAuthentifier = document.querySelector("[data-is-authenticated]");

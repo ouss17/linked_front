@@ -4,6 +4,7 @@ import ActusAvailableReducer from "./reducers/ActusAvailableReducer";
 import ActusByCategoryReducer from "./reducers/ActusByCategoryReducer";
 import ActusByEtablissementReducer from "./reducers/ActusByEtablissementReducer";
 import CategoriesReducer from "./reducers/CategoriesReducer";
+import CategoriesActiveReducer from "./reducers/CategoriesActiveReducer";
 import EtablissementConfigReducer from "./reducers/EtablissementConfigReducer";
 import EtablissementReducer from "./reducers/EtablissementReducer";
 import EtablissementsReducer from "./reducers/EtablissementsReducer";
@@ -24,6 +25,7 @@ const RootReducers = combineReducers({
     ActusByCategoryReducer,
     ActusByEtablissementReducer,
     CategoriesReducer,
+    CategoriesActiveReducer,
     EtablissementConfigReducer,
     EtablissementReducer,
     EtablissementsReducer,

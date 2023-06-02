@@ -13,7 +13,7 @@ import api from "../../http-common";
 export const GetActusByEtablissement = (idEtablissement) => {
     return async (dispatch) => {
         try {
-            const res = await api.get("/actus/etablissement/" + idEtablissement);
+            const res = await api.get("/actus/etablissement/" + idEtablissement + "?hydra:false");
             dispatch({ payload: res.data, type: RETRIEVE_ACTUS_ETABLISSEMENT });
             return res;
         } catch (error) {
@@ -24,10 +24,10 @@ export const GetActusByEtablissement = (idEtablissement) => {
 };
 
 
-export const GetActusByCategory = (idCategory) => {
+export const GetActusByCategory = (idEtablissement, idCategory) => {
     return async (dispatch) => {
         try {
-            const res = await api.get("/actus/category/" + idCategory);
+            const res = await api.get("/actus/category/" + idEtablissement + "/" + idCategory);
             dispatch({ payload: res.data, type: RETRIEVE_ACTUS_ETABLISSEMENT_CATEGORY });
             return res;
         } catch (error) {

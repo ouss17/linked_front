@@ -33,17 +33,12 @@
     filter: drop-shadow(0px 0px 4px #333);
 }
 
-#localisation-page {
-    height: 92vh;
-    position: relative;
-}
-
-#localisation-page .localisation .icons {
+.localisation .icons {
     width: 30px;
     color: var(--main-color);
 }
 
-#localisation-page #adrs {
+#adrs {
     display: flex;
     align-items: center;
     justify-content: space-between;

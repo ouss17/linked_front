@@ -1,11 +1,12 @@
 import React from 'react'
+import MetaData from '../../components/MetaData';
+
 
 const Horaires = () => {
-
     return (
-        <div>
-            Horaires
-        </div>
+        <>
+            <MetaData title={`Horaires - Linked`} index="false" />
+        </>
     )
 }
 

@@ -42,6 +42,12 @@ import { GetEtablissementConfig } from "./Redux/actions/EtablissementConfigActio
 import { GetEtablissement } from "./Redux/actions/EtablissementAction";
 import { GetActusByEtablissement } from "./Redux/actions/ActusAction";
 import { GetCategoriesActive } from "./Redux/actions/CategoryAction";
+import Usage from "./pages/Usage";
+import About from "./pages/About";
+import Contributions from "./pages/Settings/Contributions";
+import LoginUser from "./pages/User/LoginUser";
+import CreateUser from "./pages/User/CreateUser";
+import StripePaymentForm from "./pages/Payment/Stripe";
 
 const App = () => {
   const config = {
@@ -202,7 +208,13 @@ const App = () => {
             <Route path="/medias/:id" element={<GetContentByCategory />} />
             <Route path="/actus" element={<GetActus />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/confidentialite" element={<Confidentialite />} />
+            <Route path="settings/confidentialite" element={<Confidentialite />} />
+            <Route path="settings/legal" element={<About />} />
+            <Route path="settings/utilisation" element={<Usage />} />
+            <Route path="settings/contributions" element={<Contributions />} />
+            <Route path="settings/login" element={<LoginUser />} />
+            <Route path="settings/register" element={<CreateUser />} />
+            <Route path="/payment/stripe" element={<StripePaymentForm />} />
 
             {/* LOGGED ROUTES */}
 

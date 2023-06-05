@@ -81,6 +81,15 @@
   --red-color: #d3252b;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.noAccount {
+  margin-bottom: 30px;
+}
+
 .main-color {
   color: var(--main-color);
 }
@@ -129,12 +138,40 @@ body {
   align-items: baseline;
 }
 
+.get-categories-page div {
+  margin-bottom: 15px;
+}
+
 .get-categories-page p {
   padding: 2rem;
   background: #fff;
   border-radius: 1rem;
   filter: drop-shadow(0 0 2px #333);
   text-transform: capitalize;
+}
+
+.get-actus-page {
+  width: 90%;
+  margin: 15px auto;
+}
+
+.faq-body {
+  background-color: #f1f0f5;
+}
+
+.faq-row {
+  margin-bottom: 10px;
+  border-radius: 15px;
+  padding: 10px !important;
+  background-color: white;
+}
+
+.styles_faq-row-wrapper__3vA1D
+  .styles_row-body__1NvUo
+  .styles_faq-row__2YF3c
+  .styles_row-title__1YiiY
+  .styles_icon-wrapper__2cftw {
+  max-width: 260px !important;
 }
 
 .actuContainer {
@@ -201,7 +238,7 @@ body {
 }
 
 #navBar {
-  position: sticky;
+  position: absolute;
   bottom: 0;
   width: 100%;
   filter: drop-shadow(0px -1px 3px #333);
@@ -242,11 +279,6 @@ body {
   height: 100%;
   width: 100%;
   color: #000;
-}
-
-#navBar .items .item.active,
-#navBar .items .item.active > * {
-  pointer-events: none;
 }
 
 #navBar .items .item.active .link .icon {
@@ -352,19 +384,27 @@ body {
 }
 
 #container2 {
-  overflow: hidden;
+  /* overflow: hidden; */
   overflow-y: auto;
   padding: 0 0 70px 0;
   min-height: 93vh;
 }
 
 #container2 .setting {
-  text-align: center;
-  border: 1px solid var(--main-color);
-  border-radius: 2rem;
+  border-bottom: 1px solid rgba(4, 191, 148, 0.3);
+  text-decoration: none;
+  display: block;
+  color: #000;
+}
+
+#container2 .setting h2 {
   padding: 1rem 2rem;
-  color: var(--main-color);
-  margin: 1rem 0;
+}
+
+#container2 .setting h2 svg {
+  stroke: var(--main-color);
+  fill: var(--main-color);
+  margin-right: 10px;
 }
 
 .masjidLayout .countDown {
@@ -555,7 +595,7 @@ body {
   margin: 2rem auto;
 }
 
-#loginForm .button {
+.button {
   padding: 10px 15px;
   cursor: pointer;
   text-align: center;
@@ -568,8 +608,8 @@ body {
   color: #fff;
 }
 
-#loginForm .button:before,
-#loginForm .button:after {
+.button:before,
+.button:after {
   content: "";
   display: block;
   position: absolute;
@@ -577,7 +617,7 @@ body {
   left: 50%;
 }
 
-#loginForm .button:before {
+.button:before {
   transform: translate(-50%, -50%);
   width: var(--before-w, 100%);
   height: var(--before-h, 100%);
@@ -588,7 +628,7 @@ body {
   transition-delay: 0.2s, 0.2s, 0.2s, 0.2s;
 }
 
-#loginForm .button:after {
+.button:after {
   width: 16px;
   height: 16px;
   margin: -8px 0 0 -8px;
@@ -598,7 +638,7 @@ body {
   transform: scale(0);
 }
 
-#loginForm .button span {
+.button span {
   z-index: 1;
   display: block;
   position: relative;
@@ -626,7 +666,7 @@ body {
   transition: stroke-dashoffset 0.3s ease;
 }
 
-#loginForm .button.processing {
+.button.processing {
   --before-w: 41px;
   --before-h: 41px;
   --before-r: 22px;
@@ -637,52 +677,67 @@ body {
   pointer-events: none;
 }
 
-#loginForm .button.processing .logStated {
+.button.processing .logStated {
   --svg-o: 60px;
 }
 
-#loginForm .button.processing:before {
+.button.processing:before {
   -webkit-animation: pulse 3s linear forwards;
   animation: pulse 3s linear forwards;
 }
 
-#loginForm .button.processing.logFail:before {
+.button.processing.logFail:before {
   background: var(--red-color);
   transition-delay: 0.2s, 0.2s, 0.2s, 3s;
 }
 
-#loginForm .button.processing:after {
+.button.processing:after {
   -webkit-animation: dot 3s linear forwards;
   animation: dot 3s linear forwards;
 }
 
-#loginForm .button.processing .logStated {
+.button.processing .logStated {
   transition-delay: 3s;
 }
 
-#loginForm.form {
+.form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 50vh;
   justify-content: space-around;
   text-align: center;
+  width: 40%;
+  margin: 30px auto 0 auto;
 }
 
-#loginForm.form .field {
+.errorField {
+  font-size: 10px;
+  text-align: left;
+  color: red;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.fieldsForm {
+  width: 100%;
+}
+
+.form .field {
   margin: 2rem;
 }
 
-#loginForm.form .fieldValue {
+.form .fieldValue {
   padding: 1rem;
   border: 1px solid var(--main-color);
   border-radius: 2rem;
   width: 100%;
 }
 
-#loginForm.form .fieldName {
+.form .fieldName {
   text-align: initial;
   margin: 1rem;
+  margin-bottom: 20px;
+  display: block;
 }
 
 .stripe-element {
@@ -705,7 +760,7 @@ body {
 }
 
 .successAction {
-  color: "white";
+  color: white;
   padding: 10px 0 10px 0px;
   margin: 0 0 30px 0px;
   background-color: green;
@@ -714,7 +769,7 @@ body {
   width: 100%;
 }
 .problemAction {
-  color: "white";
+  color: white;
   padding: 10px 0 10px 0px;
   margin: 0 0 30px 0px;
   background-color: #ffa500;
@@ -722,24 +777,45 @@ body {
   border-radius: 0 0 16px 16px;
 }
 .errorAction {
-  color: "white";
+  color: white;
   padding: 10px 0 10px 0px;
   margin: 0 0 30px 0px;
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.8);
   text-align: center;
   border-radius: 0 0 16px 16px;
 }
 
-#montant {
-  width: 100%;
-  padding: 10px 20px;
-  border: 1px solid black;
-  border-radius: 15px;
-  margin: 15px 0 30px 0;
+.rights {
+  padding: 10px;
+  margin-bottom: 70px;
 }
 
-.button {
-  padding: 10px 20px;
-  border: 1px solid black;
-  border-radius: 15px;
+.rights h2,
+.rights h3 {
+  margin-bottom: 10px;
+  color: var(--main-color);
+}
+
+.rights p {
+  margin-bottom: 20px;
+}
+
+.field {
+  position: relative;
+}
+
+.passwordReveal {
+  position: absolute;
+  right: 10px;
+  opacity: 0.2;
+  cursor: pointer;
+}
+
+.passwordReveal svg {
+  stroke: grey;
+  width: 35px;
+}
+
+.passwordReveal:hover {
+  opacity: 1;
 }

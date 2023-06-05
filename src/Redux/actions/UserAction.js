@@ -61,12 +61,12 @@ export const AddUser = (data) => {
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.post(`/users`, data);
+            const res = await api.post(`/register`, data);
             dispatch({ payload: res.data, type: CREATE_USER });
             return res;
         } catch (error) {
-            console.log(error);
-            return error;
+            console.log(error.response);
+            return error.response;
         }
     };
 };

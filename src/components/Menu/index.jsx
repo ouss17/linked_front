@@ -43,40 +43,35 @@ const Menu = () => {
 
     useEffect(() => {
         let currentId = null;
-        switch (location.pathname) {
-            case "/actus":
-                setMenuActive("actus");
-                currentId = document.getElementById("actus");
-                document.getElementById('indicator').style.transition = 'all 500ms';
-                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
-                break;
-            case "/medias":
-                setMenuActive("medias");
-                currentId = document.getElementById("medias");
-                document.getElementById('indicator').style.transition = 'all 500ms';
-                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
-                break;
-            case "/":
-                setMenuActive("/");
-                currentId = document.getElementById("horaires");
-                document.getElementById('indicator').style.transition = 'all 500ms';
-                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
-                break;
-            case "/localisation":
-                setMenuActive("localisation");
-                currentId = document.getElementById("localisation");
-                document.getElementById('indicator').style.transition = 'all 500ms';
-                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
-                break;
-            case "/settings":
-                setMenuActive("settings");
-                currentId = document.getElementById("settings");
-                document.getElementById('indicator').style.transition = 'all 500ms';
-                document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
-                break;
-
-            default:
-                break;
+        console.log(location);
+        if (location.pathname.includes("/actus")) {
+            setMenuActive("actus");
+            currentId = document.getElementById("actus");
+            document.getElementById('indicator').style.transition = 'all 500ms';
+            document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+        } else if (location.pathname.includes("/medias")) {
+            setMenuActive("medias");
+            currentId = document.getElementById("medias");
+            document.getElementById('indicator').style.transition = 'all 500ms';
+            document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+        }
+        else if (location.pathname.includes("/localisation")) {
+            setMenuActive("localisation");
+            currentId = document.getElementById("localisation");
+            document.getElementById('indicator').style.transition = 'all 500ms';
+            document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+        }
+        else if (location.pathname.includes("/settings")) {
+            setMenuActive("settings");
+            currentId = document.getElementById("settings");
+            document.getElementById('indicator').style.transition = 'all 500ms';
+            document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
+        }
+        else if (location.pathname.includes("/")) {
+            setMenuActive("/");
+            currentId = document.getElementById("horaires");
+            document.getElementById('indicator').style.transition = 'all 500ms';
+            document.getElementById('indicator').style.left = `${currentId.offsetLeft - 5}px`;
         }
     }, [location]);
 

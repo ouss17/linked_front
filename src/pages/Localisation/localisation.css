@@ -2,7 +2,7 @@
 .leaflet-container {
     height: 92vh;
     width: 100vw;
-    border-radius: 2rem;
+    border-radius: 0 0 2rem 2rem;
     z-index: 0;
     position: absolute;
 }

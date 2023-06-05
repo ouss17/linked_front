@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useElements, useStripe, PaymentElement } from '@stripe/react-stripe-js';
-import MetaData from './components/MetaData';
+import MetaData from '../../../components/MetaData';
+
+
 const stripePromise = loadStripe('pk_test_WLGhRYS6M1nD97KjvRWJIA6600RIBSS5BD');
+
 const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
@@ -13,13 +16,13 @@ const PaymentForm = () => {
         event.preventDefault();
 
         // Obtenir le client secret à partir de votre backend Symfony
-        const response = await fetch('http://127.0.0.1:8000/apiLinked/create-stripe-payment-intent', {
+        const response = await fetch('http://127.0.0.1:8000/apiLinked/create_stripe_payment_intent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             // Envoyer les détails de paiement au backend
-            body: JSON.stringify({ amount: amount }),
+            body: JSON.stringify({ amount: 1000 }),
         });
         console.log(response);
 
@@ -54,27 +57,30 @@ const PaymentForm = () => {
         <>
             <MetaData title={`Dons - Linked`} index="false" />
             <div>
-                <h1 className='main-title'>Effectuer un Don</h1>
+                <h1 className='main-title'>Faire un Don</h1>
                 {
                     successAction
                     &&
                     <p className='successAction'>Paiement validé.</p>
                 }
                 {
-                    problemAction
-                    &&
-                    <p className='problemAction'>La catégorie existe déjà !</p>
-                }
-                {
                     errorAction
                     &&
-                    <p className='errorAction'>Une erreur est survenue.</p>
+                    <p className='errorAction'>Veuillez entrer une carte de paiement valide.</p>
                 }
-                <form onSubmit={handleSubmit} className='container'>
-                    <label htmlFor="montant">Montant</label>
-                    <input type="number" name="montant" id="montant" />
-                    <CardElement className='stripe-element' />
-                    <button type="submit" className='button'>Payer</button>
+                <form onSubmit={handleSubmit} className='form' id='loginForm'>
+                    <div className="fieldsForm">
+                        <div className="field">
+                            <label htmlFor="montant" className='fieldName'>Montant</label>
+                            <input className='fieldValue' type="number" name="montant" />
+                        </div>
+                        <div className="field">
+                            <CardElement className='stripe-element' />
+                        </div>
+                    </div>
+                    <button type="submit" className='button' id="logIn">
+                        <span>Faire un don</span>
+                    </button>
                 </form>
             </div>
         </>

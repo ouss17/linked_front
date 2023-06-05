@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 import { Icon, divIcon, point } from "leaflet";
@@ -7,8 +8,7 @@ import customMarker from '../../assets/ressources/leaflet/marker.png'
 import MarkerClusterGroup from "react-leaflet-cluster";
 
 import "./localisation.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Localisation = () => {
     const etablissement = useSelector((state) => state.EtablissementReducer);

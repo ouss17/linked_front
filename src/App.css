@@ -116,7 +116,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* body {
@@ -127,6 +127,7 @@ body {
   color: #fff;
   padding: 2rem;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .get-categories-page {
@@ -138,8 +139,9 @@ body {
   align-items: baseline;
 }
 
-.get-categories-page div {
+.get-categories-page a {
   margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .get-categories-page p {
@@ -378,6 +380,7 @@ body {
 #container {
   background-color: #f1f0f5;
   overflow: hidden;
+  height: 100vh;
   /* margin: 1rem; */
   /* padding: 2rem; */
   /* border-radius: 1rem; */
@@ -385,9 +388,8 @@ body {
 
 #container2 {
   /* overflow: hidden; */
-  overflow-y: auto;
-  padding: 0 0 70px 0;
-  min-height: 93vh;
+  overflow: auto;
+  height: 93vh;
 }
 
 #container2 .setting {
@@ -532,7 +534,7 @@ body {
 }
 
 #salat-hours-page {
-  margin: 1rem 3rem 0rem 3rem;
+  margin: 1rem 3rem 6rem 3rem;
 }
 
 .hour-salat {
@@ -588,6 +590,16 @@ body {
 
 .hour-salat.current span.notif-salat .icons.notifOn {
   color: #fff;
+}
+
+.mosqueeName {
+  gap: 30px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2em;
 }
 
 #allSets {
@@ -818,4 +830,72 @@ body {
 
 .passwordReveal:hover {
   opacity: 1;
+}
+
+.contenu {
+  padding: 5px;
+  margin: 10px 0;
+  border-bottom: 1px solid var(--main-color);
+  width: 80%;
+  position: relative;
+}
+
+.contenu h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.contenu iframe {
+  width: 45%;
+  height: 390px;
+  margin: 10px auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.contenus {
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 800px) {
+  .form {
+    width: 81%;
+  }
+  .contenu iframe {
+    width: 100%;
+    height: 290px;
+  }
+}
+
+@media (max-width: 630px) {
+  .mosqueeName {
+    font-size: 1.5em;
+  }
+  #container2 .setting h2 {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 500px) {
+  .styles_faq-row-wrapper__3vA1D
+    .styles_row-body__1NvUo
+    .styles_faq-row__2YF3c
+    .styles_row-title__1YiiY
+    .styles_icon-wrapper__2cftw {
+    max-width: 100px !important;
+  }
+  .contenu iframe {
+    height: 200px;
+  }
+}
+
+@media (max-width: 435px) {
+  .mosqueeName {
+    font-size: 1em;
+  }
 }

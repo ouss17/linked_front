@@ -48,6 +48,8 @@ import Contributions from "./pages/Settings/Contributions";
 import LoginUser from "./pages/User/LoginUser";
 import CreateUser from "./pages/User/CreateUser";
 import StripePaymentForm from "./pages/Payment/Stripe";
+import { GetMe } from "./Redux/actions/UserAction";
+import UserContext from "./context/UserContext";
 
 const App = () => {
   const config = {
@@ -110,10 +112,13 @@ const App = () => {
   // we set up Klaro with the config
   Klaro.setup(config);
 
-  const [state, setState] = useState({
+  const [userLog, setUserLog] = useState({
     username: "",
     role: "",
+    idEtablissement: "",
     isLogged: false,
+    token: '',
+    setUser: () => { },
   });
 
   const { pathname } = useLocation();
@@ -130,28 +135,55 @@ const App = () => {
     })
   }, []);
 
+  const userLogged = useSelector((state) => state.MeReducer);
+
   useEffect(() => {
     let serverAuthentifier = document.querySelector("[data-is-authenticated]");
 
     let user = Cookies.get(USER_CONNECTED_STORAGE);
 
     if (user) {
-      if ((serverAuthentifier.dataset.isAuthenticated = "false")) {
-        /*         sleep(3000).then(() => {
+      dispatch(GetMe({}, user)).then((res) => {
+        console.log(res);
+        if (res.idUser) {
+          setUserLog({
+            username: res.nameUser,
+            role: res.roles,
+            paymentCards: res.paymentCards,
+            idEtablissement: res.idEtablissement,
+            isLogged: true,
+          })
+          // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
+          // decodedUser = JSON.parse(decodedUser);
+          // setState((prevState) => ({
+          //   ...prevState,
+          //   ...decodedUser,
+          // }));
+        } else {
           Cookies.remove(USER_CONNECTED_STORAGE, {
             path: "/",
             sameSite: "Lax",
             secure: true,
           });
-        }); */
-      } else {
-        let decodedUser = Buffer.from(user, "base64").toString("utf-8");
-        decodedUser = JSON.parse(decodedUser);
-        setState((prevState) => ({
-          ...prevState,
-          ...decodedUser,
-        }));
-      }
+          navigate('/')
+        }
+      })
+      // if ((serverAuthentifier.dataset.isAuthenticated = "false")) {
+      /*         sleep(3000).then(() => {
+        Cookies.remove(USER_CONNECTED_STORAGE, {
+          path: "/",
+          sameSite: "Lax",
+          secure: true,
+        });
+      }); */
+      // } else {
+      // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
+      // decodedUser = JSON.parse(decodedUser);
+      // setState((prevState) => ({
+      //   ...prevState,
+      //   ...decodedUser,
+      // }));
+      // }
 
       if (pathname.includes("/admin")) {
         let currentPath = localStorage.getItem("path");
@@ -197,35 +229,38 @@ const App = () => {
   };
   return (
     <>
-      <ScrollToTop>
-        <Routes>
-          {/* PUBLIC */}
+      <UserContext.Provider value={{ userLog, setUserLog }}>
 
-          <Route path="/" element={<Layout />}>
-            <Route index path="/" element={<Horaires />} />
-            <Route path="/localisation" element={<Localisation />} />
-            <Route path="/medias" element={<GetCategories />} />
-            <Route path="/medias/:id" element={<GetContentByCategory />} />
-            <Route path="/actus" element={<GetActus />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="settings/confidentialite" element={<Confidentialite />} />
-            <Route path="settings/legal" element={<About />} />
-            <Route path="settings/utilisation" element={<Usage />} />
-            <Route path="settings/contributions" element={<Contributions />} />
-            <Route path="settings/login" element={<LoginUser />} />
-            <Route path="settings/register" element={<CreateUser />} />
-            <Route path="/payment/stripe" element={<StripePaymentForm />} />
+        <ScrollToTop>
+          <Routes>
+            {/* PUBLIC */}
 
-            {/* LOGGED ROUTES */}
+            <Route path="/" element={<Layout />}>
+              <Route index path="/" element={<Horaires />} />
+              <Route path="/localisation" element={<Localisation />} />
+              <Route path="/medias" element={<GetCategories />} />
+              <Route path="/medias/:id" element={<GetContentByCategory />} />
+              <Route path="/actus" element={<GetActus />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="settings/confidentialite" element={<Confidentialite />} />
+              <Route path="settings/legal" element={<About />} />
+              <Route path="settings/utilisation" element={<Usage />} />
+              <Route path="settings/contributions" element={<Contributions />} />
+              <Route path="settings/login" element={<LoginUser />} />
+              <Route path="settings/register" element={<CreateUser />} />
+              <Route path="/payment/stripe" element={<StripePaymentForm />} />
 
-            {AuthenticatedRoutes.map((route) =>
-              StructurationRoutes(route, uniqid())
-            )}
-          </Route>
+              {/* LOGGED ROUTES */}
 
-          {<Route path="*" element={<Navigate to="/" replace />} />}
-        </Routes>
-      </ScrollToTop>
+              {AuthenticatedRoutes.map((route) =>
+                StructurationRoutes(route, uniqid())
+              )}
+            </Route>
+
+            {<Route path="*" element={<Navigate to="/" replace />} />}
+          </Routes>
+        </ScrollToTop>
+      </UserContext.Provider>
     </>
   );
 }

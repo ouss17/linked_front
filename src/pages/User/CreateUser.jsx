@@ -18,7 +18,6 @@ const CreateUser = () => {
     };
 
     const [msgEmail, setMsgEmail] = useState("");
-    const [msgPassword, setMsgPassword] = useState("");
     const [msgError, setMsgError] = useState("");
 
     const [inputForm, setInputForm] = useState({

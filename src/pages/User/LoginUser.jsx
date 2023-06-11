@@ -1,24 +1,121 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import MetaData from '../../components/MetaData';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye } from '../../assets/Svg/Svg';
+import { ConnectUser, GetMe } from '../../Redux/actions/UserAction';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { USER_CONNECTED_STORAGE } from '../../constant';
+import UserContext from '../../context/UserContext';
 
 const LoginUser = () => {
+
     const [inputState, setInputState] = useState(true);
+    const [successAction, setSuccessAction] = useState(false);
+    const [errorAction, setErrorAction] = useState(false);
+    const { userLog, setUserLog } = useContext(UserContext);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const isEmpty = (value) => {
+        if (value === "" || value === undefined || value === null) return true;
+        return false;
+    };
+
+    const [msgError, setMsgError] = useState("");
+    const [inputForm, setInputForm] = useState({
+        username: "",
+        password: "",
+    });
+
+    const handleChangeInput = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+        setInputForm({ ...inputForm, [name]: value });
+    };
+
+    const emptyValue = () => {
+        setInputState({
+            username: "",
+            password: "",
+        });
+    };
+
+    const logUser = (e) => {
+        e.preventDefault();
+        const inputName = Object.keys(inputForm);
+        let listError = [];
+        inputName.forEach((element) => {
+            if (isEmpty(inputState[element])) {
+                listError.push({
+                    name: element,
+                    message: "ce champ doit être remplis",
+                });
+            }
+        });
+
+        dispatch(ConnectUser(inputForm)).then(res => {
+            console.log(res);
+            if (res.status !== 200) {
+                setMsgError("Le nom d'utilisateur ou le mot de passe est incorrect")
+                setErrorAction(true)
+                setTimeout(() => {
+                    setErrorAction(false)
+                }, 5000);
+            } else {
+                Cookies.set(USER_CONNECTED_STORAGE, res.data.token, { expires: 30 });
+                setSuccessAction(true)
+                dispatch(GetMe({}, res.data.token)).then((res) => {
+                    console.log(res);
+                    if (res.idUser) {
+                        setUserLog({
+                            username: res.nameUser,
+                            role: res.roles,
+                            paymentCards: res.paymentCards,
+                            idEtablissement: res.idEtablissement,
+                            isLogged: true,
+                        })
+                        // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
+                        // decodedUser = JSON.parse(decodedUser);
+                        // setState((prevState) => ({
+                        //   ...prevState,
+                        //   ...decodedUser,
+                        // }));
+                    }
+                })
+                setTimeout(() => {
+                    setSuccessAction(false)
+                    navigate("/");
+                }, 3000);
+            }
+        })
+        emptyValue();
+    }
 
     return (
         <>
             <MetaData title={`Connexion - Linked`} index="false" />
             <h1 className="title titleMain">Connexion</h1>
+            {
+                successAction
+                &&
+                <p className='successAction'>Connecté !</p>
+            }
+            {
+                errorAction
+                &&
+                <p className='errorAction'>{msgError}</p>
+            }
             <form className="form" id="loginForm">
                 <div className="fieldsForm">
                     <div className="field">
-                        <label for="userName" className="fieldName">Nom d'utilisateur ou adresse email <span style={{ color: "red" }}> *</span></label>
-                        <input className="fieldValue" type="text" name="userName" id="userName" placeholder="user ou user@gmail.com" />
+                        <label for="username" className="fieldName">Nom d'utilisateur<span style={{ color: "red" }}> *</span></label>
+                        <input onChange={handleChangeInput} className="fieldValue" type="text" name="username" id="username" placeholder="user@gmail.com" />
                     </div>
                     <div className="field">
-                        <label for="userPass" className="fieldName">Mot de passe <span style={{ color: "red" }}> *</span></label>
-                        <input className="fieldValue" type={inputState ? "password" : "text"} name="userPass" id="userPass" placeholder="Abcd1234?" />
+                        <label for="password" className="fieldName">Mot de passe <span style={{ color: "red" }}> *</span></label>
+                        <input onChange={handleChangeInput} className="fieldValue" type={inputState ? "password" : "text"} name="password" id="password" placeholder="Abcd1234?" />
                         <span className="passwordReveal" onClick={() => setInputState(!inputState)}><Eye /></span>
                     </div>
                 </div>
@@ -26,7 +123,7 @@ const LoginUser = () => {
                     <Link to="/settings/register">Pas de compte ? Enregistrez-vous ici !</Link>
                 </div>
                 <div className="actionsForm">
-                    <button className="button" id="logIn">
+                    <button className="button" role='button' onClick={(e) => logUser(e)} id="logIn">
                         <span>Se connecter</span>
                         <svg className="icons" id="loginFail" viewBox="0 0 15 15">
                             <polyline points="0 0 15 15"></polyline>

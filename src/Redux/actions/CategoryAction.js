@@ -3,7 +3,8 @@ import {
     RETRIEVE_CATEGORIES,
     UPDATE_CATEGORY,
     DELETE_CATEGORY,
-    RETRIEVE_CATEGORIES_ACTIVE
+    RETRIEVE_CATEGORIES_ACTIVE,
+    RETRIEVE_CATEGORY
 } from "./types";
 import api from "../../http-common";
 
@@ -13,6 +14,19 @@ export const GetCategories = () => {
         try {
             const res = await api.get("/categories");
             dispatch({ payload: res.data, type: RETRIEVE_CATEGORIES });
+            return res;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
+};
+
+export const GetCategory = (idCategory) => {
+    return async (dispatch) => {
+        try {
+            const res = await api.get("/categories/" + idCategory);
+            dispatch({ payload: res.data, type: RETRIEVE_CATEGORY });
             return res;
         } catch (error) {
             console.log(error);

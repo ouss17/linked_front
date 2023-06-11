@@ -33,11 +33,17 @@ export const GetUser = (idUser) => {
     };
 };
 
-export const GetMe = (data) => {
+export const GetMe = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.post(`/me`, data);
+            const res = await api.post(`/me`, data, config);
             dispatch({ payload: res.data, type: RETRIEVE_ME });
+            return res.data;
         } catch (error) {
             console.log(error);
             return error;
@@ -45,14 +51,14 @@ export const GetMe = (data) => {
     };
 };
 
-export const LoginUser = (data) => {
+export const ConnectUser = (data) => {
     return async (dispatch) => {
         try {
-            const res = await api.post(`/login_check/`, data);
+            const res = await api.post(`/login_check`, data);
             return res;
         } catch (error) {
             console.log(error);
-            return error;
+            return error.response;
         }
     };
 };

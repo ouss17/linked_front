@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MetaData from '../../components/MetaData';
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const GetCategories = () => {
 
@@ -15,9 +16,9 @@ const GetCategories = () => {
                     categories.length > 0
                         ?
                         categories.map((category) => (
-                            <div key={category.idCategory}>
+                            <Link to={`/medias/${category.idCategory}`} key={category.idCategory}>
                                 <p>{category.nameCategory}</p>
-                            </div>
+                            </Link>
                         ))
                         :
                         <p>Il n'y a pas de contenu pour le moment.</p>

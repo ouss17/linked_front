@@ -157,7 +157,12 @@ const Horaires = () => {
                 nextPrayerName = 'Isha';
             }
             else if (currentPrayer == 'Isha') {
-                awaitNewPrayer = new Date(moment(prayerTimesTomorrow.fajr).tz('Europe/Paris').format('M/D/Y H:mm'));
+                if (new Date(moment(prayerTimes.isha).tz('Europe/Paris').format('M/D/Y')) > new Date(moment().tz('Europe/Paris').format('M/D/Y'))) {
+                    awaitNewPrayer = new Date(moment(prayerTimesTomorrow.fajr).tz('Europe/Paris').format('M/D/Y H:mm'));
+
+                } else {
+                    awaitNewPrayer = new Date(moment(prayerTimes.fajr).tz('Europe/Paris').format('M/D/Y H:mm'));
+                }
                 currentPrayerTime = new Date(moment(prayerTimes.isha).tz('Europe/Paris').format('M/D/Y H:mm'));
 
                 nextPrayerName = 'Fajr';
@@ -274,12 +279,6 @@ const Horaires = () => {
         }
     }, [])
 
-    function liveTime() {
-
-
-
-    }
-
     return (
         <>
             <MetaData title={`Horaires - Linked`} index="false" />
@@ -305,10 +304,17 @@ const Horaires = () => {
                             {
                                 timeToPray
                                     ?
-                                    <>
-                                        Salat <br />
-                                        {currentPray}
-                                    </>
+                                    currentPray == "Isha"
+                                        ?
+                                        <>
+                                            {timeRemaining} <br />
+                                            <span className="countDownText">avant {closestHour}</span>
+                                        </>
+                                        :
+                                        <>
+                                            Salat <br />
+                                            {currentPray}
+                                        </>
                                     :
                                     <>
                                         {timeRemaining} <br />

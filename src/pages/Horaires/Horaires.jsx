@@ -10,11 +10,16 @@ import masjidLayoutA from '../../assets/ressources/pics/masjidLayoutA.png';
 import masjidLayoutM from '../../assets/ressources/pics/masjidLayoutM.png';
 import masjidLayoutI from '../../assets/ressources/pics/masjidLayoutI.png';
 import { CircleTime } from '../../assets/Svg/Svg';
+import { Link } from 'react-router-dom';
 
 const Horaires = () => {
     const { userLog, setUserLog } = useContext(UserContext);
     const etablissementConfig = useSelector((state) => state.EtablissementConfigReducer);
-    const etablissement = useSelector((state) => state.EtablissementReducer)
+    const etablissement = useSelector((state) => state.EtablissementReducer);
+
+    useEffect(() => {
+        console.log(userLog);
+    }, [userLog]);
 
     const coordinates = new Coordinates(48.93665, 2.51447);
     moment.tz.setDefault("Europe/Paris");
@@ -325,6 +330,13 @@ const Horaires = () => {
                         </div>
                     </div>
                 </div>
+                {
+                    userLog.isLogged
+                    &&
+                    <div className="donation">
+                        <Link to="/payment/stripe">Faire un don</Link>
+                    </div>
+                }
             </div>
             <div id="salat-hours-page">
                 <div className="hours-container">

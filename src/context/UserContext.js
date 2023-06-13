@@ -6,5 +6,6 @@ export default createContext({
     isLogged: false,
     token: '',
     idEtablissement: "",
+    emailUser: "",
     setUser: () => { },
 });

@@ -15,10 +15,16 @@ const Settings = () => {
             sameSite: "Lax",
             secure: true,
         });
+        Cookies.remove(USER_CONNECTED_STORAGE + 'e', {
+            path: "/",
+            sameSite: "Lax",
+            secure: true,
+        });
         setUserLog({
             username: "",
             role: "",
             paymentCards: "",
+            emailUser: "",
             idEtablissement: "",
             isLogged: false,
         })
@@ -30,18 +36,13 @@ const Settings = () => {
             <MetaData title={`Paramètres - Linked`} index="false" />
             <h1 className="title titleMain">Paramètres</h1>
             <div id="allSets">
-                <Link to="/" className="setting" id="us">
-                    <h2 className="title titleThird"><Group /> Qui sommes-nous ?</h2>
-                </Link>
-                <Link to="/settings/legal" className="setting" id="infoL">
-                    <h2 className="title titleThird"><Plume /> Informations légales</h2>
-                </Link>
-                <Link to="/settings/confidentialite" className="setting" id="infoL">
-                    <h2 className="title titleThird"><UserLock /> Politique de confidentialité</h2>
-                </Link>
-                <Link to="/settings/utilisation" className="setting" id="infoL">
-                    <h2 className="title titleThird"><Book /> Conditions générales d'utilisation</h2>
-                </Link>
+                {
+                    userLog.isLogged &&
+                    <Link to="/settings/profile" className="setting" id="login">
+                        <h2 className="title titleThird"><User /> Profil</h2>
+                    </Link>
+
+                }
                 {
                     !userLog.isLogged ?
                         <Link to="/settings/login" className="setting" id="login">
@@ -52,6 +53,15 @@ const Settings = () => {
                             <h2 className="title titleThird"><User /> Déconnexion</h2>
                         </Link>
                 }
+                <Link to="/settings/legal" className="setting" id="infoL">
+                    <h2 className="title titleThird"><Plume /> Informations légales</h2>
+                </Link>
+                <Link to="/settings/confidentialite" className="setting" id="infoL">
+                    <h2 className="title titleThird"><UserLock /> Politique de confidentialité</h2>
+                </Link>
+                <Link to="/settings/utilisation" className="setting" id="infoL">
+                    <h2 className="title titleThird"><Book /> Conditions générales d'utilisation</h2>
+                </Link>
                 <Link to="/settings/contributions" className="setting" id="contributions">
                     <h2 className="title titleThird"><Puzzle /> Contributions</h2>
                 </Link>

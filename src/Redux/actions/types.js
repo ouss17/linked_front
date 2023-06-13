@@ -57,5 +57,6 @@ export const RETRIEVE_USER = "RETRIEVE_USER";
 export const RETRIEVE_USERS = "RETRIEVE_USERS";
 export const RETRIEVE_ME = "RETRIEVE_ME";
 export const UPDATE_ME = "UPDATE_ME";
+export const UPDATE_PASS = "UPDATE_PASS";
 export const UPDATE_USER = "UPDATE_USER";
 export const DELETE_USER = "DELETE_USER";

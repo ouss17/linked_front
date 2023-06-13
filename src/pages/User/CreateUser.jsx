@@ -4,6 +4,9 @@ import { Eye } from '../../assets/Svg/Svg';
 import { AddUser } from '../../Redux/actions/UserAction';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import UserContext from '../../context/UserContext';
 
 const CreateUser = () => {
     const [inputState, setInputState] = useState(true);
@@ -11,6 +14,13 @@ const CreateUser = () => {
     const [errorAction, setErrorAction] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { userLog, setUserLog } = useContext(UserContext);
+
+    useEffect(() => {
+        if (userLog.isLogged) {
+            navigate("/");
+        }
+    }, [userLog]);
 
     const isEmpty = (value) => {
         if (value === "" || value === undefined || value === null) return true;

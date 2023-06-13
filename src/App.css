@@ -862,6 +862,34 @@ body {
   justify-content: center;
 }
 
+.donation {
+  display: flex;
+  gap: 30px;
+  position: absolute;
+  top: 78%;
+  left: 67px;
+  transform: translate(-50%, -50%);
+  color: white;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.donation a {
+  padding: 15px;
+}
+
+.changePass {
+  background: var(--main-color);
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.changePass a {
+  padding: 10px;
+  display: block;
+}
+
 @media (max-width: 800px) {
   .form {
     width: 81%;

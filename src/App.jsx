@@ -50,6 +50,9 @@ import CreateUser from "./pages/User/CreateUser";
 import StripePaymentForm from "./pages/Payment/Stripe";
 import { GetMe } from "./Redux/actions/UserAction";
 import UserContext from "./context/UserContext";
+import Profile from "./pages/User/Profile";
+import ChangePassword from "./pages/User/Profile/ChangePassword";
+import NewPassword from "./pages/User/Profile/NewPassword";
 
 const App = () => {
   const config = {
@@ -117,6 +120,7 @@ const App = () => {
     role: "",
     idEtablissement: "",
     isLogged: false,
+    emailUser: "",
     token: '',
     setUser: () => { },
   });
@@ -141,6 +145,7 @@ const App = () => {
     let serverAuthentifier = document.querySelector("[data-is-authenticated]");
 
     let user = Cookies.get(USER_CONNECTED_STORAGE);
+    let userE = Cookies.get(USER_CONNECTED_STORAGE + 'e');
 
     if (user) {
       dispatch(GetMe({}, user)).then((res) => {
@@ -151,7 +156,9 @@ const App = () => {
             role: res.roles,
             paymentCards: res.paymentCards,
             idEtablissement: res.idEtablissement,
+            emailUser: userE,
             isLogged: true,
+            token: user
           })
           // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
           // decodedUser = JSON.parse(decodedUser);
@@ -161,6 +168,11 @@ const App = () => {
           // }));
         } else {
           Cookies.remove(USER_CONNECTED_STORAGE, {
+            path: "/",
+            sameSite: "Lax",
+            secure: true,
+          });
+          Cookies.remove(USER_CONNECTED_STORAGE + 'e', {
             path: "/",
             sameSite: "Lax",
             secure: true,
@@ -248,6 +260,9 @@ const App = () => {
               <Route path="settings/contributions" element={<Contributions />} />
               <Route path="settings/login" element={<LoginUser />} />
               <Route path="settings/register" element={<CreateUser />} />
+              <Route path="settings/profile" element={<Profile />} />
+              <Route path="settings/changePassword" element={<ChangePassword />} />
+              <Route path="settings/newPassword" element={<NewPassword />} />
               <Route path="/payment/stripe" element={<StripePaymentForm />} />
 
               {/* LOGGED ROUTES */}

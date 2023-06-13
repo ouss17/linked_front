@@ -4,6 +4,7 @@ import {
     RETRIEVE_USERS,
     RETRIEVE_ME,
     UPDATE_USER,
+    UPDATE_PASS,
     DELETE_USER,
     UPDATE_ME,
 } from "./types";
@@ -47,6 +48,19 @@ export const GetMe = (data, token) => {
         } catch (error) {
             console.log(error);
             return error;
+        }
+    };
+};
+
+export const ChangePass = (data, token) => {
+    return async (dispatch) => {
+        try {
+            const res = await api.post(`/changePassword`, data);
+            dispatch({ payload: res.data, type: UPDATE_PASS });
+            return res;
+        } catch (error) {
+            console.log(error);
+            return error.response;
         }
     };
 };

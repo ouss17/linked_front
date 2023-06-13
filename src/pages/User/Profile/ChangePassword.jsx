@@ -1,29 +1,18 @@
-import React, { useContext, useState } from 'react'
-import MetaData from '../../components/MetaData';
-import { Link, useNavigate } from 'react-router-dom';
-import { Eye } from '../../assets/Svg/Svg';
-import { ConnectUser, GetMe } from '../../Redux/actions/UserAction';
+import React, { useContext, useEffect, useState } from 'react'
+import MetaData from '../../../components/MetaData'
 import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie';
-import { USER_CONNECTED_STORAGE } from '../../constant';
-import UserContext from '../../context/UserContext';
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import UserContext from '../../../context/UserContext';
+import { ConnectUser } from '../../../Redux/actions/UserAction';
+import { Eye } from '../../../assets/Svg/Svg';
 
-const LoginUser = () => {
-
+const ChangePassword = () => {
     const [inputState, setInputState] = useState(true);
-    const [successAction, setSuccessAction] = useState(false);
     const [errorAction, setErrorAction] = useState(false);
     const { userLog, setUserLog } = useContext(UserContext);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (userLog.isLogged) {
-            navigate("/");
-        }
-    }, [userLog]);
 
     const isEmpty = (value) => {
         if (value === "" || value === undefined || value === null) return true;
@@ -36,6 +25,14 @@ const LoginUser = () => {
         password: "",
     });
 
+    useEffect(() => {
+        if (userLog.isLogged) {
+            setInputForm({ ...inputForm, username: userLog.username })
+        } else {
+            navigate('/');
+        }
+    }, [userLog]);
+
     const handleChangeInput = (e) => {
         let name = e.target.name;
         let value = e.target.value;
@@ -44,7 +41,7 @@ const LoginUser = () => {
 
     const emptyValue = () => {
         setInputForm({
-            username: "",
+            ...inputForm,
             password: "",
         });
     };
@@ -65,38 +62,13 @@ const LoginUser = () => {
         dispatch(ConnectUser(inputForm)).then(res => {
             console.log(res);
             if (res.status !== 200) {
-                setMsgError("Le nom d'utilisateur ou le mot de passe est incorrect")
+                setMsgError("Mot de passe incorrect")
                 setErrorAction(true)
                 setTimeout(() => {
                     setErrorAction(false)
                 }, 5000);
             } else {
-                Cookies.set(USER_CONNECTED_STORAGE, res.data.token, { expires: 30 });
-                Cookies.set(USER_CONNECTED_STORAGE + 'e', res.data.emailUser, { expires: 30 });
-                setSuccessAction(true)
-                dispatch(GetMe({}, res.data.token)).then((res2) => {
-                    console.log(res2);
-                    if (res2.idUser) {
-                        setUserLog({
-                            username: res2.nameUser,
-                            role: res2.roles,
-                            paymentCards: res2.paymentCards,
-                            idEtablissement: res2.idEtablissement,
-                            emailUser: res.data.emailUser,
-                            isLogged: true,
-                        })
-                        // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
-                        // decodedUser = JSON.parse(decodedUser);
-                        // setState((prevState) => ({
-                        //   ...prevState,
-                        //   ...decodedUser,
-                        // }));
-                    }
-                })
-                setTimeout(() => {
-                    setSuccessAction(false)
-                    navigate("/");
-                }, 3000);
+                navigate("/settings/newPassword");
             }
         })
         emptyValue();
@@ -104,13 +76,8 @@ const LoginUser = () => {
 
     return (
         <>
-            <MetaData title={`Connexion - Linked`} index="false" />
-            <h1 className="title titleMain">Connexion</h1>
-            {
-                successAction
-                &&
-                <p className='successAction'>Connecté !</p>
-            }
+            <MetaData title={`Changer mot de passe - Linked`} index="false" />
+            <h1 className="title titleMain">Changer mot de passe</h1>
             {
                 errorAction
                 &&
@@ -119,17 +86,10 @@ const LoginUser = () => {
             <form className="form" id="loginForm">
                 <div className="fieldsForm">
                     <div className="field">
-                        <label for="username" className="fieldName">Nom d'utilisateur<span style={{ color: "red" }}> *</span></label>
-                        <input onChange={handleChangeInput} className="fieldValue" type="text" name="username" id="username" placeholder="user@gmail.com" />
-                    </div>
-                    <div className="field">
                         <label for="password" className="fieldName">Mot de passe <span style={{ color: "red" }}> *</span></label>
                         <input onChange={handleChangeInput} className="fieldValue" type={inputState ? "password" : "text"} name="password" id="password" placeholder="Abcd1234?" />
                         <span className="passwordReveal" onClick={() => setInputState(!inputState)}><Eye /></span>
                     </div>
-                </div>
-                <div className="noAccount">
-                    <Link to="/settings/register">Pas de compte ? Enregistrez-vous ici !</Link>
                 </div>
                 <div className="actionsForm">
                     <button className="button" role='button' onClick={(e) => logUser(e)} id="logIn">
@@ -140,9 +100,9 @@ const LoginUser = () => {
                         </svg>
                     </button>
                 </div>
-            </form>
+            </form >
         </>
     )
 }
 
-export default LoginUser
+export default ChangePassword

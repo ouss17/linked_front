@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useElements, useStripe, PaymentElement } from '@stripe/react-stripe-js';
 import MetaData from '../../../components/MetaData';
+import UserContext from '../../../context/UserContext';
+import { useNavigate } from 'react-router';
+import { SendMail } from '../../../Redux/actions/mailAction';
+import { useDispatch } from 'react-redux';
 
 
 const stripePromise = loadStripe('pk_test_WLGhRYS6M1nD97KjvRWJIA6600RIBSS5BD');
@@ -9,9 +13,35 @@ const stripePromise = loadStripe('pk_test_WLGhRYS6M1nD97KjvRWJIA6600RIBSS5BD');
 const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
+    const { userLog, setUserLog } = useContext(UserContext);
     const [successAction, setSuccessAction] = useState(false);
     const [problemAction, setProblemAction] = useState(false);
     const [errorAction, setErrorAction] = useState(false);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!userLog.isLogged) {
+            navigate('/')
+        }
+    }, [userLog]);
+
+    const [inputForm, setInputForm] = useState({
+        amount: ""
+    })
+
+    const dispatch = useDispatch();
+
+    const handleChangeInput = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+        setInputForm({ ...inputForm, [name]: value });
+    };
+
+
+    const emptyValue = () => {
+        setInputForm({
+            amount: "",
+        });
+    };
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -20,9 +50,15 @@ const PaymentForm = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userLog.token}`
             },
             // Envoyer les détails de paiement au backend
-            body: JSON.stringify({ amount: 1000 }),
+            body: JSON.stringify({
+                amount: parseFloat(inputForm.amount) * 100,
+                username: userLog.username,
+                email: userLog.emailUser,
+                mosquee: "mosquée Al Rahma"
+            }),
         });
         console.log(response);
 
@@ -46,6 +82,15 @@ const PaymentForm = () => {
         } else {
             // Le paiement a été effectué avec succès
             setSuccessAction(true)
+            dispatch(SendMail({
+                amount: parseFloat(inputForm.amount),
+                sender: "mr.ousmanediarra@gmail.com",
+                username: userLog.username,
+                email: userLog.emailUser,
+                mosquee: "mosquée Al Rahma",
+                subject: "Don de amount€ à la mosquee",
+                content: "<p> username, nous vous confirmons la recepetion de votre don d'un montant de <strong>amount€</strong> pour la mosquee.</p> <p>Nous vous remercions pour votre confiance et espérons continuer à nous améliorer par la suite pour convenir à vos besoins.</p> <p>En cas de problème, cet email pourra servir de justificatif de paiement.</p> <p>Cordialement</p>"
+            }, userLog.token))
             setTimeout(() => {
                 setSuccessAction(false)
             }, 5000);
@@ -61,7 +106,7 @@ const PaymentForm = () => {
                 {
                     successAction
                     &&
-                    <p className='successAction'>Paiement validé.</p>
+                    <p className='successAction'>Paiement d'un montant de {inputForm.amount}€ validé.</p>
                 }
                 {
                     errorAction
@@ -71,8 +116,8 @@ const PaymentForm = () => {
                 <form onSubmit={handleSubmit} className='form' id='loginForm'>
                     <div className="fieldsForm">
                         <div className="field">
-                            <label htmlFor="montant" className='fieldName'>Montant</label>
-                            <input className='fieldValue' type="number" name="montant" />
+                            <label htmlFor="amount" className='fieldName'>Montant</label>
+                            <input onChange={handleChangeInput} className='fieldValue' type="number" name="amount" />
                         </div>
                         <div className="field">
                             <CardElement className='stripe-element' />

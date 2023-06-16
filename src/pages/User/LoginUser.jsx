@@ -78,6 +78,7 @@ const LoginUser = () => {
                     console.log(res2);
                     if (res2.idUser) {
                         setUserLog({
+                            id: res2.idUser,
                             username: res2.nameUser,
                             role: res2.roles,
                             paymentCards: res2.paymentCards,

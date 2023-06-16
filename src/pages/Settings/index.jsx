@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import MetaData from '../../components/MetaData';
-import { Book, Group, Plume, Puzzle, User, UserLock } from '../../assets/Svg/Svg';
+import { Book, Group, Plume, Puzzle, User, UserLock, UserPro } from '../../assets/Svg/Svg';
 import { Link } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Cookies from "js-cookie";
@@ -52,6 +52,17 @@ const Settings = () => {
                         <Link to="/" onClick={destroySession} className="setting" id="login">
                             <h2 className="title titleThird"><User /> Déconnexion</h2>
                         </Link>
+                }
+
+                {
+                    userLog.isLogged
+                    &&
+                    userLog.idEtablissement == null
+                    &&
+                    <Link to="/settings/gestionEtablissement" className="setting" id="login">
+                        <h2 className="title titleThird"><UserPro /> Vous voulez gérer un établissement ?</h2>
+                    </Link>
+
                 }
                 <Link to="/settings/legal" className="setting" id="infoL">
                     <h2 className="title titleThird"><Plume /> Informations légales</h2>

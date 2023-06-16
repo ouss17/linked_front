@@ -30,6 +30,9 @@ const Profile = () => {
             <div className="changePass">
                 <Link to="/settings/changePassword">Changer de mot de passe</Link>
             </div>
+            <div className="deleteAccount">
+                <Link to="/settings/deleteAccount">Supprimer le compte</Link>
+            </div>
         </form>
     )
 }

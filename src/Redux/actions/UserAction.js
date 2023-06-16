@@ -122,7 +122,7 @@ export const UpdateMe = (data) => {
 export const DeleteUser = (data) => {
     return async (dispatch) => {
         try {
-            const res = await api.delete(`/users/${data.idUser}`);
+            const res = await api.delete(`/users/${data.id}`);
             dispatch({ payload: data, type: DELETE_USER });
             return res;
         } catch (error) {

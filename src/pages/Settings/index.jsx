@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import MetaData from '../../components/MetaData';
-import { Book, Group, Plume, Puzzle, User, UserLock, UserPro } from '../../assets/Svg/Svg';
+import { Book, Group, MultipleGear, Plume, Puzzle, User, UserLock, UserPro } from '../../assets/Svg/Svg';
 import { Link } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import Cookies from "js-cookie";
@@ -8,7 +8,6 @@ import { USER_CONNECTED_STORAGE } from '../../constant';
 
 const Settings = () => {
     const { userLog, setUserLog } = useContext(UserContext);
-    console.log(userLog, 'userlog');
     const destroySession = () => {
         Cookies.remove(USER_CONNECTED_STORAGE, {
             path: "/",
@@ -21,6 +20,7 @@ const Settings = () => {
             secure: true,
         });
         setUserLog({
+            id: "",
             username: "",
             role: "",
             paymentCards: "",
@@ -61,6 +61,18 @@ const Settings = () => {
                     &&
                     <Link to="/settings/gestionEtablissement" className="setting" id="login">
                         <h2 className="title titleThird"><UserPro /> Vous voulez gérer un établissement ?</h2>
+                    </Link>
+
+                }
+                {
+                    userLog.isLogged
+                    &&
+                    userLog.idEtablissement !== null
+                    &&
+                    userLog.role.includes("ROLE_GERANT")
+                    &&
+                    <Link to="/settings/etablissement" className="setting" id="login">
+                        <h2 className="title titleThird"><MultipleGear /> Gestion de l'établissement</h2>
                     </Link>
 
                 }

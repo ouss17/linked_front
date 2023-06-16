@@ -56,6 +56,12 @@ import NewPassword from "./pages/User/Profile/NewPassword";
 import Feedback from "./pages/Feedback";
 import ChargeContext from "./context/ChargeContext";
 import AskGestion from "./pages/Etablissement/AskGestion";
+import ConfigEtablissement from "./pages/Etablissement";
+import CreateActus from "./pages/Actus/CreateActus";
+import Users from "./pages/Admin";
+import Admin from "./pages/Admin";
+import CreateEtablissement from "./pages/Admin/CreateEtablissement";
+import DeleteAccount from "./pages/User/Profile/DeleteAccount";
 
 const App = () => {
   const config = {
@@ -274,9 +280,12 @@ const App = () => {
                 <Route path="settings/login" element={<LoginUser />} />
                 <Route path="settings/register" element={<CreateUser />} />
                 <Route path="settings/profile" element={<Profile />} />
+                <Route path="settings/deleteAccount" element={<DeleteAccount />} />
                 <Route path="settings/changePassword" element={<ChangePassword />} />
                 <Route path="settings/newPassword" element={<NewPassword />} />
                 <Route path="settings/gestionEtablissement" element={<AskGestion />} />
+                <Route path="settings/etablissement" element={<ConfigEtablissement />} />
+                <Route path="settings/admin" element={<Admin />} />
                 <Route path="/payment/stripe" element={<StripePaymentForm />} />
                 <Route path="/feedback" element={<Feedback />} />
 

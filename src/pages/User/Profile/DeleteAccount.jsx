@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import MetaData from '../../../components/MetaData'
+import UserContext from '../../../context/UserContext';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import UserContext from '../../../context/UserContext';
-import { ConnectUser } from '../../../Redux/actions/UserAction';
+import { ConnectUser, DeleteUser } from '../../../Redux/actions/UserAction';
+import Cookies from "js-cookie";
+import { USER_CONNECTED_STORAGE } from '../../../constant';
+import MetaData from '../../../components/MetaData';
 import { Eye } from '../../../assets/Svg/Svg';
 
-const ChangePassword = () => {
+const DeleteAccount = () => {
     const [inputState, setInputState] = useState(true);
     const [errorAction, setErrorAction] = useState(false);
+    const [successAction, setSuccessAction] = useState(false);
     const { userLog, setUserLog } = useContext(UserContext);
 
     const dispatch = useDispatch();
@@ -45,7 +48,6 @@ const ChangePassword = () => {
             password: "",
         });
     };
-
     const logUser = (e) => {
         e.preventDefault();
         const inputName = Object.keys(inputForm);
@@ -68,16 +70,48 @@ const ChangePassword = () => {
                     setErrorAction(false)
                 }, 5000);
             } else {
-                navigate("/settings/newPassword");
+                dispatch(DeleteUser(userLog)).then((res) => {
+                    if (res.status !== 204) {
+                        setMsgError("Une erreur est survenue.")
+                        setErrorAction(true)
+                        setTimeout(() => {
+                            setErrorAction(false)
+                        }, 5000);
+                    } else {
+                        setSuccessAction(true);
+                        setTimeout(() => {
+                            Cookies.remove(USER_CONNECTED_STORAGE, {
+                                path: "/",
+                                sameSite: "Lax",
+                                secure: true,
+                            });
+                            Cookies.remove(USER_CONNECTED_STORAGE + 'e', {
+                                path: "/",
+                                sameSite: "Lax",
+                                secure: true,
+                            });
+                            setUserLog({
+                                id: "",
+                                username: "",
+                                role: "",
+                                paymentCards: "",
+                                emailUser: "",
+                                idEtablissement: "",
+                                isLogged: false,
+                            })
+                            setSuccessAction(false);
+                            navigate("/");
+                        }, 3000);
+                    }
+                })
             }
         })
         emptyValue();
     }
-
     return (
         <>
-            <MetaData title={`Changer mot de passe - Linked`} index="false" />
-            <h1 className="title titleMain">Changer mot de passe</h1>
+            <MetaData title={`Supprimer le compte- Linked`} index="false" />
+            <h1 className="title titleMain">Supprimer le compte</h1>
             {
                 errorAction
                 &&
@@ -86,6 +120,9 @@ const ChangePassword = () => {
             <form className="form" id="loginForm">
                 <div className="fieldsForm">
                     <div className="field">
+                        <p>Etes-vous sûr de vouloir supprimer votre compte ? Une fois votre compte supprimé, l'action est irréversible. Si votre décision est prise, veuillez entrer votre mot de passe pour confirmer votre identité et cliquer sur le bouton en dessous.</p>
+                    </div>
+                    <div className="field">
                         <label for="password" className="fieldName">Mot de passe <span style={{ color: "red" }}> *</span></label>
                         <input onChange={handleChangeInput} className="fieldValue" type={inputState ? "password" : "text"} name="password" id="password" placeholder="Abcd1234?" />
                         <span className="passwordReveal" onClick={() => setInputState(!inputState)}><Eye /></span>
@@ -93,7 +130,7 @@ const ChangePassword = () => {
                 </div>
                 <div className="actionsForm">
                     <button className="button" role='button' onClick={(e) => logUser(e)} id="logIn">
-                        <span>Changer le mot de passe</span>
+                        <span>Supprimer mon compte</span>
                         <svg className="icons" id="loginFail" viewBox="0 0 15 15">
                             <polyline points="0 0 15 15"></polyline>
                             <polyline points="0 16 16 0"></polyline>
@@ -105,4 +142,4 @@ const ChangePassword = () => {
     )
 }
 
-export default ChangePassword
+export default DeleteAccount

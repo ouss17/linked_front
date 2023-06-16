@@ -48,11 +48,16 @@ export const GetCategoriesActive = (idEtablissement) => {
     };
 };
 
-export const AddCategory = (data) => {
+export const AddCategory = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.post("/categories", data);
+            const res = await api.post("/categories", data, config);
             dispatch({ payload: res.data, type: CREATE_CATEGORY });
             return res;
         } catch (error) {
@@ -62,11 +67,16 @@ export const AddCategory = (data) => {
     };
 };
 
-export const UpdateCategory = (data) => {
+export const UpdateCategory = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.put(`/categories/${data.idCategory}`, data);
+            const res = await api.put(`/categories/${data.idCategory}`, data, config);
             dispatch({ payload: res.data, type: UPDATE_CATEGORY });
             return res;
         } catch (error) {
@@ -76,10 +86,15 @@ export const UpdateCategory = (data) => {
     };
 };
 
-export const DeleteCategory = (data) => {
+export const DeleteCategory = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.delete(`/categories/${data.idCategory}`);
+            const res = await api.delete(`/categories/${data.idCategory}`, config);
             dispatch({ payload: data, type: DELETE_CATEGORY });
             return res;
         } catch (error) {

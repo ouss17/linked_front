@@ -7,10 +7,15 @@ import {
 } from "./types";
 import api from "../../http-common";
 
-export const GetFeedbacks = () => {
+export const GetFeedbacks = (token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.get("/feedbacks");
+            const res = await api.get("/feedback", config);
             dispatch({ payload: res.data, type: RETRIEVE_FEEDBACKS });
             return res;
         } catch (error) {
@@ -20,10 +25,15 @@ export const GetFeedbacks = () => {
     };
 };
 
-export const GetFeedbacksByEtablissement = (idEtablissement) => {
+export const GetFeedbacksByEtablissement = (idEtablissement, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.get(`/feedbacks/etablissement/${idEtablissement}`);
+            const res = await api.get(`/feedback/etablissement/${idEtablissement}`, config);
             dispatch({ payload: res.data, type: RETRIEVE_FEEDBACKS_ETABLISSEMENT });
             return res;
         } catch (error) {
@@ -33,10 +43,15 @@ export const GetFeedbacksByEtablissement = (idEtablissement) => {
     };
 };
 
-export const GetFeedback = (idFeedback) => {
+export const GetFeedback = (idFeedback, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.get(`/feebacks/${idFeedback}`);
+            const res = await api.get(`/feeback/${idFeedback}`, config);
             dispatch({ payload: res.data, type: RETRIEVE_FEEDBACK });
             return res;
         } catch (error) {
@@ -47,11 +62,16 @@ export const GetFeedback = (idFeedback) => {
 };
 
 
-export const AddFeedback = (data) => {
+export const AddFeedback = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.post("/feedbacks", data);
+            const res = await api.post("/feedback", data, config);
             dispatch({ payload: res.data, type: CREATE_FEEDBACK });
             return res;
         } catch (error) {
@@ -61,10 +81,15 @@ export const AddFeedback = (data) => {
     };
 };
 
-export const DeleteFeedback = (data) => {
+export const DeleteFeedback = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.delete(`/feedbacks/${data.idFeedback}`);
+            const res = await api.delete(`/feedback/${data.idFeedback}`, config);
             dispatch({ payload: data, type: DELETE_FEEDBACK });
             return res;
         } catch (error) {

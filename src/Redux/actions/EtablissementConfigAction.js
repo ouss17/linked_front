@@ -21,11 +21,16 @@ export const GetEtablissementConfig = (idEtablissementConfig) => {
 };
 
 
-export const AddEtablissementConfig = (data) => {
+export const AddEtablissementConfig = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.post("/etablissement_configs", data);
+            const res = await api.post("/etablissement_configs", data, config);
             dispatch({ payload: res.data, type: CREATE_ETABLISSEMENT_CONFIG });
             return res;
         } catch (error) {
@@ -35,10 +40,15 @@ export const AddEtablissementConfig = (data) => {
     };
 };
 
-export const UpdateEtablissementConfig = (data) => {
+export const UpdateEtablissementConfig = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.put(`/etablissement_configs/${data.idEtablissementConfig}`, data);
+            const res = await api.put(`/etablissement_configs/${data.idEtablissementConfig}`, data, config);
             dispatch({ payload: res.data, type: UPDATE_ETABLISSEMENT_CONFIG });
             return res;
         } catch (error) {
@@ -48,10 +58,15 @@ export const UpdateEtablissementConfig = (data) => {
     };
 };
 
-export const DeleteEtablissementConfig = (data) => {
+export const DeleteEtablissementConfig = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.delete(`/etablissement_configs/${data.idEtablissementConfig}`);
+            const res = await api.delete(`/etablissement_configs/${data.idEtablissementConfig}`, config);
             dispatch({ payload: data, type: DELETE_ETABLISSEMENT_CONFIG });
             return res;
         } catch (error) {

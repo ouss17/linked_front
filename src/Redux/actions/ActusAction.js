@@ -1,6 +1,7 @@
 import {
     CREATE_ACTU,
     RETRIEVE_ACTUS_ETABLISSEMENT,
+    RETRIEVE_ALL_ACTUS_ETABLISSEMENT,
     RETRIEVE_ACTUS_ETABLISSEMENT_CATEGORY,
     RETRIEVE_ACTUS_ETABLISSEMENT_AVAILABLE,
     RETRIEVE_ACTU,
@@ -13,8 +14,21 @@ import api from "../../http-common";
 export const GetActusByEtablissement = (idEtablissement) => {
     return async (dispatch) => {
         try {
-            const res = await api.get("/actus/etablissement/" + idEtablissement + "?hydra:false");
+            const res = await api.get("/actus/etablissement/" + idEtablissement);
             dispatch({ payload: res.data, type: RETRIEVE_ACTUS_ETABLISSEMENT });
+            return res;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
+};
+
+export const GetAllActusByEtablissement = (idEtablissement) => {
+    return async (dispatch) => {
+        try {
+            const res = await api.get("/actus/all/etablissement/" + idEtablissement);
+            dispatch({ payload: res.data, type: RETRIEVE_ALL_ACTUS_ETABLISSEMENT });
             return res;
         } catch (error) {
             console.log(error);
@@ -64,11 +78,16 @@ export const GetActu = (idActu) => {
     };
 };
 
-export const AddActu = (data) => {
+export const AddActu = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.post("/actus", data);
+            const res = await api.post("/actus", data, config);
             dispatch({ payload: res.data, type: CREATE_ACTU });
             return res;
         } catch (error) {
@@ -78,11 +97,16 @@ export const AddActu = (data) => {
     };
 };
 
-export const UpdateActu = (data) => {
+export const UpdateActu = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.put(`/actus/${data.idActu}`, data);
+            const res = await api.put(`/actus/${data.idActu}`, data, config);
             dispatch({ payload: res.data, type: UPDATE_ACTU });
             return res;
         } catch (error) {
@@ -92,10 +116,15 @@ export const UpdateActu = (data) => {
     };
 };
 
-export const DeleteActu = (data) => {
+export const DeleteActu = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.delete(`/actus/${data.idActu}`);
+            const res = await api.delete(`/actus/${data.idActu}`, config);
             dispatch({ payload: data, type: DELETE_ACTU });
             return res;
         } catch (error) {

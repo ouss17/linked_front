@@ -337,6 +337,14 @@ const Horaires = () => {
                         <Link to="/payment/stripe">Faire un don</Link>
                     </div>
                 }
+
+                {
+                    userLog.isLogged
+                    &&
+                    <div className="feedback">
+                        <Link to="/feedback">Donnez-nous votre avis !</Link>
+                    </div>
+                }
             </div>
             <div id="salat-hours-page">
                 <div className="hours-container">

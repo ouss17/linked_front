@@ -35,11 +35,16 @@ export const GetEtablissement = (idEtablissement) => {
 };
 
 
-export const AddEtablissement = (data) => {
+export const AddEtablissement = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.post("/etablissements", data);
+            const res = await api.post("/etablissements", data, token);
             dispatch({ payload: res.data, type: CREATE_ETABLISSEMENT });
             return res;
         } catch (error) {
@@ -49,11 +54,16 @@ export const AddEtablissement = (data) => {
     };
 };
 
-export const UpdateEtablissement = (data) => {
+export const UpdateEtablissement = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.put(`/etablissements/${data.idEtablissement}`, data);
+            const res = await api.put(`/etablissements/${data.idEtablissement}`, data, token);
             dispatch({ payload: res.data, type: UPDATE_ETABLISSEMENT });
             return res;
         } catch (error) {
@@ -63,10 +73,15 @@ export const UpdateEtablissement = (data) => {
     };
 };
 
-export const DeleteEtablissement = (data) => {
+export const DeleteEtablissement = (data, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.delete(`/etablissements/${data.idEtablissement}`);
+            const res = await api.delete(`/etablissements/${data.idEtablissement}`, token);
             dispatch({ payload: data, type: DELETE_ETABLISSEMENT });
             return res;
         } catch (error) {

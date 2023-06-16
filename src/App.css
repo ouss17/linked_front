@@ -720,6 +720,7 @@ body {
   text-align: center;
   width: 40%;
   margin: 30px auto 0 auto;
+  padding-bottom: 85px;
 }
 
 .errorField {
@@ -874,7 +875,20 @@ body {
   border-radius: 15px;
 }
 
-.donation a {
+.feedback {
+  display: flex;
+  gap: 30px;
+  position: absolute;
+  top: 78%;
+  right: 0%;
+  transform: translateY(-50%);
+  color: white;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.donation a,
+.feedback a {
   padding: 15px;
 }
 
@@ -919,6 +933,10 @@ body {
   }
   .contenu iframe {
     height: 200px;
+  }
+  .feedback {
+    right: -24px;
+    transform: translate(-15%, -50%);
   }
 }
 

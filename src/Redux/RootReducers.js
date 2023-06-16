@@ -3,6 +3,7 @@ import ActuReducer from "./reducers/ActuReducer";
 import ActusAvailableReducer from "./reducers/ActusAvailableReducer";
 import ActusByCategoryReducer from "./reducers/ActusByCategoryReducer";
 import ActusByEtablissementReducer from "./reducers/ActusByEtablissementReducer";
+import AllActusByEtablissementReducer from "./reducers/AllActusByEtablissementReducer";
 import CategoriesReducer from "./reducers/CategoriesReducer";
 import CategoryReducer from "./reducers/CategoryReducer";
 import CategoriesActiveReducer from "./reducers/CategoriesActiveReducer";
@@ -25,6 +26,7 @@ const RootReducers = combineReducers({
     ActusAvailableReducer,
     ActusByCategoryReducer,
     ActusByEtablissementReducer,
+    AllActusByEtablissementReducer,
     CategoriesReducer,
     CategoryReducer,
     CategoriesActiveReducer,

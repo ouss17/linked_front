@@ -53,6 +53,9 @@ import UserContext from "./context/UserContext";
 import Profile from "./pages/User/Profile";
 import ChangePassword from "./pages/User/Profile/ChangePassword";
 import NewPassword from "./pages/User/Profile/NewPassword";
+import Feedback from "./pages/Feedback";
+import ChargeContext from "./context/ChargeContext";
+import AskGestion from "./pages/Etablissement/AskGestion";
 
 const App = () => {
   const config = {
@@ -116,6 +119,7 @@ const App = () => {
   Klaro.setup(config);
 
   const [userLog, setUserLog] = useState({
+    id: "",
     username: "",
     role: "",
     idEtablissement: "",
@@ -124,6 +128,8 @@ const App = () => {
     token: '',
     setUser: () => { },
   });
+
+  const [charge, setCharge] = useState(false);
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -152,6 +158,7 @@ const App = () => {
         console.log(res);
         if (res.idUser) {
           setUserLog({
+            id: res.idUser,
             username: res.nameUser,
             role: res.roles,
             paymentCards: res.paymentCards,
@@ -179,7 +186,9 @@ const App = () => {
           });
           navigate('/')
         }
+        setCharge(true);
       })
+
       // if ((serverAuthentifier.dataset.isAuthenticated = "false")) {
       /*         sleep(3000).then(() => {
         Cookies.remove(USER_CONNECTED_STORAGE, {
@@ -204,6 +213,9 @@ const App = () => {
           localStorage.removeItem("path");
         }
       }
+    } else {
+      setCharge(true);
+
     }
   }, []);
 
@@ -241,41 +253,45 @@ const App = () => {
   };
   return (
     <>
-      <UserContext.Provider value={{ userLog, setUserLog }}>
+      <ChargeContext.Provider value={{ charge, setCharge }}>
+        <UserContext.Provider value={{ userLog, setUserLog }}>
 
-        <ScrollToTop>
-          <Routes>
-            {/* PUBLIC */}
+          <ScrollToTop>
+            <Routes>
+              {/* PUBLIC */}
 
-            <Route path="/" element={<Layout />}>
-              <Route index path="/" element={<Horaires />} />
-              <Route path="/localisation" element={<Localisation />} />
-              <Route path="/medias" element={<GetCategories />} />
-              <Route path="/medias/:id" element={<GetContentByCategory />} />
-              <Route path="/actus" element={<GetActus />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="settings/confidentialite" element={<Confidentialite />} />
-              <Route path="settings/legal" element={<About />} />
-              <Route path="settings/utilisation" element={<Usage />} />
-              <Route path="settings/contributions" element={<Contributions />} />
-              <Route path="settings/login" element={<LoginUser />} />
-              <Route path="settings/register" element={<CreateUser />} />
-              <Route path="settings/profile" element={<Profile />} />
-              <Route path="settings/changePassword" element={<ChangePassword />} />
-              <Route path="settings/newPassword" element={<NewPassword />} />
-              <Route path="/payment/stripe" element={<StripePaymentForm />} />
+              <Route path="/" element={<Layout />}>
+                <Route index path="/" element={<Horaires />} />
+                <Route path="/localisation" element={<Localisation />} />
+                <Route path="/medias" element={<GetCategories />} />
+                <Route path="/medias/:id" element={<GetContentByCategory />} />
+                <Route path="/actus" element={<GetActus />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="settings/confidentialite" element={<Confidentialite />} />
+                <Route path="settings/legal" element={<About />} />
+                <Route path="settings/utilisation" element={<Usage />} />
+                <Route path="settings/contributions" element={<Contributions />} />
+                <Route path="settings/login" element={<LoginUser />} />
+                <Route path="settings/register" element={<CreateUser />} />
+                <Route path="settings/profile" element={<Profile />} />
+                <Route path="settings/changePassword" element={<ChangePassword />} />
+                <Route path="settings/newPassword" element={<NewPassword />} />
+                <Route path="settings/gestionEtablissement" element={<AskGestion />} />
+                <Route path="/payment/stripe" element={<StripePaymentForm />} />
+                <Route path="/feedback" element={<Feedback />} />
 
-              {/* LOGGED ROUTES */}
+                {/* LOGGED ROUTES */}
 
-              {AuthenticatedRoutes.map((route) =>
-                StructurationRoutes(route, uniqid())
-              )}
-            </Route>
+                {AuthenticatedRoutes.map((route) =>
+                  StructurationRoutes(route, uniqid())
+                )}
+              </Route>
 
-            {<Route path="*" element={<Navigate to="/" replace />} />}
-          </Routes>
-        </ScrollToTop>
-      </UserContext.Provider>
+              {<Route path="*" element={<Navigate to="/" replace />} />}
+            </Routes>
+          </ScrollToTop>
+        </UserContext.Provider>
+      </ChargeContext.Provider>
     </>
   );
 }

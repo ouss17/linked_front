@@ -1,17 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Menu from "../Menu";
+import ChargeContext from "../../context/ChargeContext";
 
 const Layout = () => {
     const location = useLocation();
+    const { charge, setCharge } = useContext(ChargeContext);
+    useEffect(() => {
+        console.log(charge);
+    }, [charge]);
 
     return (
         <div id="container">
-            <div id="container2">
-                <Outlet />
-            </div>
-            <Menu
-            />
+
+            {
+                charge &&
+                <>
+                    <div id="container2">
+                        <Outlet />
+                    </div>
+                    <Menu
+                    />
+                </>
+            }
         </div>
     );
 };

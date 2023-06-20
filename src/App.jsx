@@ -35,6 +35,8 @@ import Layout from "./components/Layout";
 
 import { useDispatch, useSelector } from "react-redux";
 
+// import OneSignal from 'onesignal';
+
 
 import './App.css';
 import Confidentialite from "./pages/Cookies";
@@ -152,6 +154,19 @@ const App = () => {
   }, []);
 
   const userLogged = useSelector((state) => state.MeReducer);
+
+  // useEffect(() => {
+  //   // Configuration de OneSignal
+  //   OneSignal.initialize({
+  //     appId: 'a3e4c38d-9275-4c55-a9fb-b32bc9de8f3c',
+  //     // Autres options de configuration
+  //   });
+
+  //   return () => {
+  //     // Nettoyer les ressources lors du démontage du composant
+  //     OneSignal.removeEventListeners();
+  //   };
+  // }, []);
 
   useEffect(() => {
     let serverAuthentifier = document.querySelector("[data-is-authenticated]");

@@ -24,10 +24,15 @@ export const GetActusByEtablissement = (idEtablissement) => {
     };
 };
 
-export const GetAllActusByEtablissement = (idEtablissement) => {
+export const GetAllActusByEtablissement = (idEtablissement, token) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
+        }
+    }
     return async (dispatch) => {
         try {
-            const res = await api.get("/actus/all/etablissement/" + idEtablissement);
+            const res = await api.get("/actus/all/etablissement/" + idEtablissement, config);
             dispatch({ payload: res.data, type: RETRIEVE_ALL_ACTUS_ETABLISSEMENT });
             return res;
         } catch (error) {
@@ -87,7 +92,7 @@ export const AddActu = (data, token) => {
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.post("/actus", data, config);
+            const res = await api.post("/actuses", data, config);
             dispatch({ payload: res.data, type: CREATE_ACTU });
             return res;
         } catch (error) {
@@ -106,7 +111,7 @@ export const UpdateActu = (data, token) => {
     return async (dispatch) => {
         console.log(data);
         try {
-            const res = await api.put(`/actus/${data.idActu}`, data, config);
+            const res = await api.put(`/actuses/${data.idActus}`, data, config);
             dispatch({ payload: res.data, type: UPDATE_ACTU });
             return res;
         } catch (error) {
@@ -117,6 +122,7 @@ export const UpdateActu = (data, token) => {
 };
 
 export const DeleteActu = (data, token) => {
+    console.log(data);
     const config = {
         headers: {
             'Authorization': `Bearer ${token}` // Ajoutez le token JWT à l'en-tête Authorization
@@ -124,7 +130,7 @@ export const DeleteActu = (data, token) => {
     }
     return async (dispatch) => {
         try {
-            const res = await api.delete(`/actus/${data.idActu}`, config);
+            const res = await api.delete(`/actuses/${data.idActus}`, config);
             dispatch({ payload: data, type: DELETE_ACTU });
             return res;
         } catch (error) {

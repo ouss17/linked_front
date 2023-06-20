@@ -44,6 +44,28 @@ const Settings = () => {
 
                 }
                 {
+                    userLog.isLogged
+                    &&
+                    userLog.idEtablissement !== null
+                    &&
+                    userLog.role.includes("ROLE_GERANT")
+                    &&
+                    <Link to="/settings/etablissement" className="setting" id="login">
+                        <h2 className="title titleThird"><MultipleGear /> Gestion de l'établissement</h2>
+                    </Link>
+
+                }
+                {
+                    userLog.isLogged
+                    &&
+                    userLog.role.includes("ROLE_ADMIN")
+                    &&
+                    <Link to="/settings/admin" className="setting" id="login">
+                        <h2 className="title titleThird"><MultipleGear /> Admin</h2>
+                    </Link>
+
+                }
+                {
                     !userLog.isLogged ?
                         <Link to="/settings/login" className="setting" id="login">
                             <h2 className="title titleThird"><User /> Connexion</h2>
@@ -61,18 +83,6 @@ const Settings = () => {
                     &&
                     <Link to="/settings/gestionEtablissement" className="setting" id="login">
                         <h2 className="title titleThird"><UserPro /> Vous voulez gérer un établissement ?</h2>
-                    </Link>
-
-                }
-                {
-                    userLog.isLogged
-                    &&
-                    userLog.idEtablissement !== null
-                    &&
-                    userLog.role.includes("ROLE_GERANT")
-                    &&
-                    <Link to="/settings/etablissement" className="setting" id="login">
-                        <h2 className="title titleThird"><MultipleGear /> Gestion de l'établissement</h2>
                     </Link>
 
                 }

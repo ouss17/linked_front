@@ -297,3 +297,236 @@ export const Eye = () => {
         </svg>
     );
 };
+
+export const Pen = () => {
+    return (
+        <svg
+            width="78"
+            height="86"
+            viewBox="0 0 78 86"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="pen svgButtonMainStroke"
+        >
+            <path
+                d="M38.6524 11.3496H11.3284C9.25785 11.3496 7.27214 12.1721 5.80807 13.6362C4.34399 15.1003 3.52148 17.086 3.52148 19.1565V73.8046C3.52148 75.8751 4.34399 77.8608 5.80807 79.3249C7.27214 80.789 9.25785 81.6115 11.3284 81.6115H65.9765C68.047 81.6115 70.0327 80.789 71.4968 79.3249C72.9609 77.8608 73.7834 75.8751 73.7834 73.8046V46.4806"
+                strokeWidth="7.02619"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M61.4851 6.07924C62.8827 4.68165 64.7783 3.89648 66.7548 3.89648C68.7313 3.89648 70.6268 4.68165 72.0244 6.07924C73.422 7.47684 74.2072 9.37238 74.2072 11.3489C74.2072 13.3254 73.422 15.2209 72.0244 16.6185L38.65 49.9929L24.5977 53.506L28.1108 39.4536L61.4851 6.07924Z"
+                strokeWidth="7.02619"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};
+
+export const Trash = () => {
+    return (
+        <svg
+            width="64"
+            height="75"
+            viewBox="0 0 64 87"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="trash svgIconsButton svgButtonMainStroke"
+        >
+            <path
+                d="M16.4642 20.2065V12.3996C16.4642 10.3291 17.2867 8.34343 18.7508 6.87935C20.2149 5.41528 22.2006 4.59277 24.2711 4.59277H39.8848C41.9554 4.59277 43.9411 5.41528 45.4051 6.87935C46.8692 8.34343 47.6917 10.3291 47.6917 12.3996V20.2065M59.402 20.2065V74.8547C59.402 76.9252 58.5795 78.9109 57.1155 80.375C55.6514 81.839 53.6657 82.6615 51.5952 82.6615H12.5608C10.4903 82.6615 8.50456 81.839 7.04049 80.375C5.57641 78.9109 4.75391 76.9252 4.75391 74.8547V20.2065H59.402Z"
+                strokeWidth="7.80688"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};
+
+export const Add = () => {
+    return (
+        <svg
+            width="168"
+            height="168"
+            viewBox="0 0 168 168"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="svgIconsButton svgButtonMainStroke"
+        >
+            <path
+                d="M83.999 11V157"
+                stroke="white"
+                strokeWidth="20.8572"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M11 84.0078H157"
+                stroke="white"
+                strokeWidth="20.8572"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};
+
+export const Cancel = () => {
+    return (
+        <svg
+            width="205"
+            height="206"
+            viewBox="0 0 205 206"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="svgIconsButton svgButtonMainStroke"
+        >
+            <path
+                d="M102.5 195.841C153.816 195.841 195.416 154.241 195.416 102.924C195.416 51.608 153.816 10.0078 102.5 10.0078C51.1832 10.0078 9.58301 51.608 9.58301 102.924C9.58301 154.241 51.1832 195.841 102.5 195.841Z"
+                stroke="white"
+                strokeWidth="18.5833"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M36.8096 37.2266L168.194 168.611"
+                stroke="white"
+                strokeWidth="18.5833"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};
+
+export const Cross = () => {
+    return (
+        <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg%22%3E"
+            className="cross svgButtonMainStroke"
+        >
+            <path
+                d="M17 1L1 17M17 17L1 1L17 17Z"
+                strokeWidth="2"
+                strokeLinecap="round"
+            />
+        </svg>
+    );
+};
+
+export const Door = () => {
+    return (
+        <svg
+            width="576"
+            height="512"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 576 512"
+            className="svgIconsButton svgButtonMainStroke"
+        >
+            <path
+                d="M320 32c0-9.9-4.5-19.2-12.3-25.2S289.8-1.4 280.2 1l-179.9 45C79 51.3 64 70.5 64 92.5V448H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H96 288h32V480 32zM256 256c0 17.7-10.7 32-24 32s-24-14.3-24-32s10.7-32 24-32s24 14.3 24 32zm96-128h96V480v32h32 64c17.7 0 32-14.3 32-32s-14.3-32-32-32H512V128c0-35.3-28.7-64-64-64H352v64z"
+                stroke="white"
+                strokeWidth="40"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    )
+}
+
+export const Modify = () => {
+    return (
+        <svg
+            width="172"
+            height="172"
+            viewBox="0 0 172 172"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="svgIconsButton svgButtonMainStroke"
+        >
+            <path
+                d="M77.7777 24.4453H23.5062C19.3937 24.4453 15.4496 26.079 12.5416 28.987C9.63368 31.8949 8 35.839 8 39.9515V148.495C8 152.607 9.63368 156.551 12.5416 159.459C15.4496 162.367 19.3937 164.001 23.5062 164.001H132.049C136.162 164.001 140.106 162.367 143.014 159.459C145.922 156.551 147.555 152.607 147.555 148.495V94.2231"
+                stroke="white"
+                strokeWidth="15.5062"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M135.926 12.8171C139.01 9.73278 143.194 8 147.556 8C151.917 8 156.101 9.73278 159.185 12.8171C162.27 15.9015 164.002 20.0848 164.002 24.4468C164.002 28.8087 162.27 32.992 159.185 36.0764L85.5309 109.731L54.5186 117.484L62.2716 86.4714L135.926 12.8171Z"
+                stroke="white"
+                strokeWidth="15.5062"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};
+
+export const Save = () => {
+    return (
+        <svg
+            width="148"
+            height="151"
+            viewBox="0 0 148 151"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="svgIconsButton svgButtonMainStroke"
+        >
+            <path
+                d="M124 147.75H15.5C11.3891 147.75 7.44666 146.117 4.53984 143.21C1.63303 140.303 0 136.361 0 132.25V23.75C0 19.6391 1.63303 15.6967 4.53984 12.7898C7.44666 9.88303 11.3891 8.25 15.5 8.25H100.75L139.5 47V132.25C139.5 136.361 137.867 140.303 134.96 143.21C132.053 146.117 128.111 147.75 124 147.75Z"
+                stroke="white"
+                strokeWidth="15.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M108.499 147.746V85.7461H30.999V147.746"
+                stroke="white"
+                strokeWidth="15.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M30.999 8.25V47H92.999"
+                stroke="white"
+                strokeWidth="15.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};
+
+export const Send = () => {
+    return (
+        <svg
+            width="220"
+            height="220"
+            viewBox="0 0 220 220"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="svgIconsButton svgButtonMainStroke"
+        >
+            <path
+                d="M209.167 10.6172L99.625 120.159"
+                stroke="white"
+                strokeWidth="19.9167"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M209.167 10.6172L139.458 209.784L99.625 120.159L10 80.3255L209.167 10.6172Z"
+                stroke="white"
+                strokeWidth="19.9167"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};

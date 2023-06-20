@@ -18,14 +18,9 @@ const EtablissementConfigReducer = (state = initialState, action) => {
             return payload;
             break;
         case UPDATE_ETABLISSEMENT_CONFIG:
-            return state.map((etablissementConfig) => {
-                if (etablissementConfig.idEtablissementConfig === payload.idEtablissementConfig) {
-                    return {
-                        ...payload,
-                    };
-                }
-                return etablissementConfig;
-            });
+            return {
+                ...payload,
+            };
             break;
         case DELETE_ETABLISSEMENT_CONFIG:
             return state.filter((etablissementConfig) => etablissementConfig.idEtablissementConfig != payload.idEtablissementConfig);

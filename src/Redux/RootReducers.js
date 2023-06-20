@@ -19,6 +19,8 @@ import NotificationsReducer from "./reducers/NotificationsReducer";
 import PaymentCardsByUserReducer from "./reducers/PaymentCardsByUserReducer";
 import UserReducer from "./reducers/UserReducer";
 import UsersReducer from "./reducers/UsersReducer";
+import RolesReducer from "./reducers/RolesReducer";
+
 
 
 const RootReducers = combineReducers({
@@ -42,6 +44,7 @@ const RootReducers = combineReducers({
     PaymentCardsByUserReducer,
     UserReducer,
     UsersReducer,
+    RolesReducer,
 });
 
 export default RootReducers;

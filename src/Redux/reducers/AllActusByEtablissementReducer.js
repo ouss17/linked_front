@@ -12,14 +12,14 @@ const AllActusByEtablissementReducer = (state = initialState, action) => {
 
     switch (type) {
         case CREATE_ACTU:
-            return [...state, payload];
+            return [payload, ...state];
             break;
         case RETRIEVE_ALL_ACTUS_ETABLISSEMENT:
             return payload;
             break;
         case UPDATE_ACTU:
             return state.map((actu) => {
-                if (actu.idActu === payload.idActu) {
+                if (actu.idActus === payload.idActus) {
                     return {
                         ...payload,
                     };
@@ -28,7 +28,7 @@ const AllActusByEtablissementReducer = (state = initialState, action) => {
             });
             break;
         case DELETE_ACTU:
-            return state.filter((actu) => actu.idActu != payload.idActu);
+            return state.filter((actu) => actu.idActus != payload.idActus);
             break;
         default:
             return state;

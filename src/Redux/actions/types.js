@@ -61,3 +61,7 @@ export const UPDATE_ME = "UPDATE_ME";
 export const UPDATE_PASS = "UPDATE_PASS";
 export const UPDATE_USER = "UPDATE_USER";
 export const DELETE_USER = "DELETE_USER";
+
+
+//ROLE
+export const RETRIEVE_ROLES = "RETRIEVE_ROLES";

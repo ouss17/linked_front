@@ -5,7 +5,6 @@ import { AddCategory } from "../../Redux/actions/CategoryAction";
 
 const FormActus = ({ action, inputData, inputChange, selectedActus, allCategories, setInputData,
   error }) => {
-  console.log(inputData);
 
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);

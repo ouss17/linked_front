@@ -88,6 +88,11 @@ a {
 
 .noAccount {
   margin-bottom: 30px;
+  transition: all 500ms;
+}
+
+.noAccount:hover {
+  color: var(--main-color);
 }
 
 .main-color {
@@ -639,6 +644,10 @@ body {
   transform-origin: 50% 50%;
   transition: width 0.3s, height 0.3s, border-radius 0.2s, background 0.3s;
   transition-delay: 0.2s, 0.2s, 0.2s, 0.2s;
+}
+
+.button[disabled] {
+  cursor: default;
 }
 
 .button[disabled]:before {

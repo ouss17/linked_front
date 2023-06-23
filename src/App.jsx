@@ -64,6 +64,11 @@ import Users from "./pages/Admin";
 import Admin from "./pages/Admin";
 import CreateEtablissement from "./pages/Admin/CreateEtablissement";
 import DeleteAccount from "./pages/User/Profile/DeleteAccount";
+import LottieShowActusContext from "./context/LottieShowActusContext";
+import LottieShowCategoriesContext from "./context/LottieShowCategoriesContext";
+import LottieShowConfigContext from "./context/LottieShowConfigContext";
+import LottieShowEtablissementContext from "./context/LottieShowEtablissementContext";
+
 
 const App = () => {
   const config = {
@@ -137,6 +142,11 @@ const App = () => {
     setUser: () => { },
   });
 
+  const [lottieShowEtablissement, setLottieShowEtablissement] = useState(true);
+  const [lottieShowConfig, setLottieShowConfig] = useState(true);
+  const [lottieShowActus, setLottieShowActus] = useState(true);
+  const [lottieShowCategories, setLottieShowCategories] = useState(true);
+
   const [charge, setCharge] = useState(false);
 
   const { pathname } = useLocation();
@@ -145,31 +155,20 @@ const App = () => {
 
   useEffect(() => {
     dispatch(GetEtablissement(1)).then(() => {
+      setLottieShowEtablissement(false);
       dispatch(GetEtablissementConfig(1)).then(() => {
+        setLottieShowConfig(false);
         dispatch(GetActusByEtablissement(1)).then(() => {
-          dispatch(GetCategoriesActive(1))
+          setLottieShowActus(false);
+          dispatch(GetCategoriesActive(1)).then(() => {
+            setLottieShowCategories(false);
+          })
         })
       })
     })
   }, []);
 
-  const userLogged = useSelector((state) => state.MeReducer);
-
-  // useEffect(() => {
-  //   // Configuration de OneSignal
-  //   OneSignal.initialize({
-  //     appId: 'a3e4c38d-9275-4c55-a9fb-b32bc9de8f3c',
-  //     // Autres options de configuration
-  //   });
-
-  //   return () => {
-  //     // Nettoyer les ressources lors du démontage du composant
-  //     OneSignal.removeEventListeners();
-  //   };
-  // }, []);
-
   useEffect(() => {
-    let serverAuthentifier = document.querySelector("[data-is-authenticated]");
 
     let user = Cookies.get(USER_CONNECTED_STORAGE);
 
@@ -187,12 +186,6 @@ const App = () => {
             isLogged: true,
             token: user
           })
-          // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
-          // decodedUser = JSON.parse(decodedUser);
-          // setState((prevState) => ({
-          //   ...prevState,
-          //   ...decodedUser,
-          // }));
         } else {
           Cookies.remove(USER_CONNECTED_STORAGE, {
             path: "/",
@@ -203,23 +196,6 @@ const App = () => {
         }
         setCharge(true);
       })
-
-      // if ((serverAuthentifier.dataset.isAuthenticated = "false")) {
-      /*         sleep(3000).then(() => {
-        Cookies.remove(USER_CONNECTED_STORAGE, {
-          path: "/",
-          sameSite: "Lax",
-          secure: true,
-        });
-      }); */
-      // } else {
-      // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
-      // decodedUser = JSON.parse(decodedUser);
-      // setState((prevState) => ({
-      //   ...prevState,
-      //   ...decodedUser,
-      // }));
-      // }
 
       if (pathname.includes("/admin")) {
         let currentPath = localStorage.getItem("path");
@@ -268,48 +244,56 @@ const App = () => {
   };
   return (
     <>
-      <ChargeContext.Provider value={{ charge, setCharge }}>
-        <UserContext.Provider value={{ userLog, setUserLog }}>
+      <LottieShowActusContext.Provider value={{ lottieShowActus, setLottieShowActus }}>
+        <LottieShowCategoriesContext.Provider value={{ lottieShowCategories, setLottieShowCategories }}>
+          <LottieShowConfigContext.Provider value={{ lottieShowConfig, setLottieShowConfig }}>
+            <LottieShowEtablissementContext.Provider value={{ lottieShowEtablissement, setLottieShowEtablissement }}>
+              <ChargeContext.Provider value={{ charge, setCharge }}>
+                <UserContext.Provider value={{ userLog, setUserLog }}>
 
-          <ScrollToTop>
-            <Routes>
-              {/* PUBLIC */}
+                  <ScrollToTop>
+                    <Routes>
+                      {/* PUBLIC */}
 
-              <Route path="/" element={<Layout />}>
-                <Route index path="/" element={<Horaires />} />
-                <Route path="/localisation" element={<Localisation />} />
-                <Route path="/medias" element={<GetCategories />} />
-                <Route path="/medias/:id" element={<GetContentByCategory />} />
-                <Route path="/actus" element={<GetActus />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="settings/confidentialite" element={<Confidentialite />} />
-                <Route path="settings/legal" element={<About />} />
-                <Route path="settings/utilisation" element={<Usage />} />
-                <Route path="settings/contributions" element={<Contributions />} />
-                <Route path="settings/login" element={<LoginUser />} />
-                <Route path="settings/register" element={<CreateUser />} />
-                <Route path="settings/profile" element={<Profile />} />
-                <Route path="settings/deleteAccount" element={<DeleteAccount />} />
-                <Route path="settings/changePassword" element={<ChangePassword />} />
-                <Route path="settings/newPassword" element={<NewPassword />} />
-                <Route path="settings/gestionEtablissement" element={<AskGestion />} />
-                <Route path="settings/etablissement" element={<ConfigEtablissement />} />
-                <Route path="settings/admin" element={<Admin />} />
-                <Route path="/payment/stripe" element={<StripePaymentForm />} />
-                <Route path="/feedback" element={<Feedback />} />
+                      <Route path="/" element={<Layout />}>
+                        <Route index path="/" element={<Horaires />} />
+                        <Route path="/localisation" element={<Localisation />} />
+                        <Route path="/medias" element={<GetCategories />} />
+                        <Route path="/medias/:id" element={<GetContentByCategory />} />
+                        <Route path="/actus" element={<GetActus />} />
+                        <Route path="/settings" element={<Settings />} />
+                        <Route path="settings/confidentialite" element={<Confidentialite />} />
+                        <Route path="settings/legal" element={<About />} />
+                        <Route path="settings/utilisation" element={<Usage />} />
+                        <Route path="settings/contributions" element={<Contributions />} />
+                        <Route path="settings/login" element={<LoginUser />} />
+                        <Route path="settings/register" element={<CreateUser />} />
+                        <Route path="settings/profile" element={<Profile />} />
+                        <Route path="settings/deleteAccount" element={<DeleteAccount />} />
+                        <Route path="settings/changePassword" element={<ChangePassword />} />
+                        <Route path="settings/newPassword" element={<NewPassword />} />
+                        <Route path="settings/gestionEtablissement" element={<AskGestion />} />
+                        <Route path="settings/etablissement" element={<ConfigEtablissement />} />
+                        <Route path="settings/admin" element={<Admin />} />
+                        <Route path="/payment/stripe" element={<StripePaymentForm />} />
+                        <Route path="/feedback" element={<Feedback />} />
 
-                {/* LOGGED ROUTES */}
+                        {/* LOGGED ROUTES */}
 
-                {AuthenticatedRoutes.map((route) =>
-                  StructurationRoutes(route, uniqid())
-                )}
-              </Route>
+                        {AuthenticatedRoutes.map((route) =>
+                          StructurationRoutes(route, uniqid())
+                        )}
+                      </Route>
 
-              {<Route path="*" element={<Navigate to="/" replace />} />}
-            </Routes>
-          </ScrollToTop>
-        </UserContext.Provider>
-      </ChargeContext.Provider>
+                      {<Route path="*" element={<Navigate to="/" replace />} />}
+                    </Routes>
+                  </ScrollToTop>
+                </UserContext.Provider>
+              </ChargeContext.Provider>
+            </LottieShowEtablissementContext.Provider>
+          </LottieShowConfigContext.Provider>
+        </LottieShowCategoriesContext.Provider>
+      </LottieShowActusContext.Provider>
     </>
   );
 }

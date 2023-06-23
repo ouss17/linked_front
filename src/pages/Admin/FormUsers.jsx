@@ -35,7 +35,7 @@ const FormUsers = ({ action, inputData, inputChange, selectedActus, roles, etabl
             setOptions(roles.map((role) => {
                 return {
                     value: `apiLinked/roles/${role.idRole}`,
-                    label: role.nameRole,
+                    label: role.nameRole == "ROLE_ADMIN" ? "Admin" : role.nameRole == "ROLE_GERANT" ? "Gérant" : role.nameRole == "ROLE_USER" && "Utilisateur",
                 };
             }))
         }

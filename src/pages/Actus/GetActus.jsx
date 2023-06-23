@@ -1,12 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import MetaData from '../../components/MetaData';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Faq from "react-faq-component";
 import { ChevronDown } from '../../assets/Svg/Svg';
+import { Player } from "@lottiefiles/react-lottie-player";
+import lottiePlayer from "../../assets/ressources/lotties/98891-insider-loading.json";
+import LottieShowActusContext from '../../context/LottieShowActusContext';
+import { GetActusByEtablissement } from '../../Redux/actions/ActusAction';
 
 const GetActus = () => {
     const actus = useSelector((state) => state.ActusByEtablissementReducer);
     const [puclications, setPublications] = useState([]);
+    const { lottieShowActus, setLottieShowActus } = useContext(LottieShowActusContext);
+    const lottieRef = useRef();
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            dispatch(GetActusByEtablissement(1))
+        }, 10000);
+        return () => {
+            clearInterval(interval)
+        }
+    }, [])
 
     useEffect(() => {
         let tab = [];
@@ -48,29 +65,38 @@ const GetActus = () => {
         <>
             <MetaData title={`Actualités - Linked`} index="false" />
             <h1 className="title titleMain">Actualités</h1>
-            <div className="get-actus-page">
-                {
-                    actus.length > 0
-                        ?
-                        // <div key={actu.idActus} className='actus'>
-                        //     <h2>{actu.titleActus}</h2>
-                        //     <p>{actu.contentActus}</p>
-                        // </div>
-                        <div style={{ transition: "all 500ms" }} className="blob actus">
-                            <Faq
-                                data={{
-                                    title: "",
-                                    rows: puclications,
-                                }}
-                                styles={styles}
-                                config={config}
-                            />
-                        </div>
+            {
+                lottieShowActus
+                    ?
+                    <Player
+                        ref={lottieRef} // set the ref to your class instance
+                        autoplay={true}
+                        loop={true}
+                        controls={false}
+                        src={lottiePlayer}
+                        style={{ height: "300px", width: "300px" }}
+                    ></Player>
+                    :
+                    <div className="get-actus-page">
+                        {
+                            actus.length > 0
+                                ?
+                                <div style={{ transition: "all 500ms" }} className="blob actus">
+                                    <Faq
+                                        data={{
+                                            title: "",
+                                            rows: puclications,
+                                        }}
+                                        styles={styles}
+                                        config={config}
+                                    />
+                                </div>
 
-                        :
-                        <p>Il n'y a pas de contenu pour le moment.</p>
-                }
-            </div>
+                                :
+                                <p>Il n'y a pas de contenu pour le moment.</p>
+                        }
+                    </div>
+            }
 
         </>
     )

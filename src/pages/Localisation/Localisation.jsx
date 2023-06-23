@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 import { Icon, divIcon, point } from "leaflet";
@@ -10,8 +10,14 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import "./localisation.css";
 import { useSelector } from "react-redux";
 
+import { Player } from "@lottiefiles/react-lottie-player";
+import lottiePlayer from "../../assets/ressources/lotties/98891-insider-loading.json";
+import LottieShowEtablissementContext from "../../context/LottieShowEtablissementContext";
+
 const Localisation = () => {
     const etablissement = useSelector((state) => state.EtablissementReducer);
+    const { lottieShowEtablissement, setLottieShowEtablissement } = useContext(LottieShowEtablissementContext);
+    const lottieRef = useRef();
 
 
     //MAP
@@ -50,35 +56,49 @@ const Localisation = () => {
     return (
         <>
             <MetaData title={`Localisation - Linked`} index="false" />
-
-            <MapContainer center={[lati, long]} zoom={6} scrollWheelZoom={true}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <MarkerClusterGroup
-                    chunkedLoading
-                    iconCreateFunction={createClusterCustomIcon}
-                >
-                    {markers.map((marker) => (
-                        <Marker position={marker.geocode} icon={customIcon}>
-                            <Popup>
-                                <p style={{ fontSize: "12px" }}>{etablissement && etablissement.nameEtablissement}</p>
-                                <p style={{ fontSize: "12px" }} id="adrs">{etablissement && etablissement.addressEtablissement} <a href={`https://www.google.com/maps/place/${etablissement && etablissement.nameEtablissement}/@${etablissement && etablissement.latitudeEtablissement},${etablissement && etablissement.longitudeEtablissement},17z/data=!3m1!4b1!4m6!3m5!1s0x47e615c008fc4cc9:0xba0c6adebba6f959!8m2!3d48.936589!4d2.5144964!16s%2Fg%2F11fj7jlps_`} target="_blank">
-                                    <Pin />
-                                </a></p>
-                            </Popup>
-                        </Marker>
-                    ))}
-                </MarkerClusterGroup>
-            </MapContainer>
-            <div className="localisation">
-                <p>Mosquée El-Rahma</p>
-                <p id="adrs">{etablissement && etablissement.addressEtablissement} <a href={`https://www.google.com/maps/place/${etablissement && etablissement.nameEtablissement}/@${etablissement && etablissement.latitudeEtablissement},${etablissement && etablissement.longitudeEtablissement},17z/data=!3m1!4b1!4m6!3m5!1s0x47e615c008fc4cc9:0xba0c6adebba6f959!8m2!3d48.936589!4d2.5144964!16s%2Fg%2F11fj7jlps_`} target="_blank">
-                    <Pin />
-                </a></p>
-                <p>Téléphone : <span className="main-color">{etablissement && etablissement.numberEtablissement}</span></p>
-            </div>
+            {
+                lottieShowEtablissement
+                    ?
+                    <Player
+                        ref={lottieRef} // set the ref to your class instance
+                        autoplay={true}
+                        loop={true}
+                        controls={false}
+                        src={lottiePlayer}
+                        style={{ height: "300px", width: "300px" }}
+                    ></Player>
+                    :
+                    <>
+                        <MapContainer center={[lati, long]} zoom={6} scrollWheelZoom={true}>
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            <MarkerClusterGroup
+                                chunkedLoading
+                                iconCreateFunction={createClusterCustomIcon}
+                            >
+                                {markers.map((marker) => (
+                                    <Marker position={marker.geocode} icon={customIcon}>
+                                        <Popup>
+                                            <p style={{ fontSize: "12px" }}>{etablissement && etablissement.nameEtablissement}</p>
+                                            <p style={{ fontSize: "12px" }} id="adrs">{etablissement && etablissement.addressEtablissement} <a href={`https://www.google.com/maps/place/${etablissement && etablissement.nameEtablissement}/@${etablissement && etablissement.latitudeEtablissement},${etablissement && etablissement.longitudeEtablissement},17z/data=!3m1!4b1!4m6!3m5!1s0x47e615c008fc4cc9:0xba0c6adebba6f959!8m2!3d48.936589!4d2.5144964!16s%2Fg%2F11fj7jlps_`} target="_blank">
+                                                <Pin />
+                                            </a></p>
+                                        </Popup>
+                                    </Marker>
+                                ))}
+                            </MarkerClusterGroup>
+                        </MapContainer>
+                        <div className="localisation">
+                            <p>Mosquée El-Rahma</p>
+                            <p id="adrs">{etablissement && etablissement.addressEtablissement} <a href={`https://www.google.com/maps/place/${etablissement && etablissement.nameEtablissement}/@${etablissement && etablissement.latitudeEtablissement},${etablissement && etablissement.longitudeEtablissement},17z/data=!3m1!4b1!4m6!3m5!1s0x47e615c008fc4cc9:0xba0c6adebba6f959!8m2!3d48.936589!4d2.5144964!16s%2Fg%2F11fj7jlps_`} target="_blank">
+                                <Pin />
+                            </a></p>
+                            <p>Téléphone : <span className="main-color">{etablissement && etablissement.numberEtablissement}</span></p>
+                        </div>
+                    </>
+            }
         </>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import MetaData from '../../components/MetaData';
 import UserContext from '../../context/UserContext';
 import { Coordinates, CalculationMethod, PrayerTimes, Prayer } from 'adhan';
@@ -12,10 +12,22 @@ import masjidLayoutI from '../../assets/ressources/pics/masjidLayoutI.png';
 import { CircleTime } from '../../assets/Svg/Svg';
 import { Link } from 'react-router-dom';
 
+
+import { Player } from "@lottiefiles/react-lottie-player";
+import lottiePlayer from "../../assets/ressources/lotties/98891-insider-loading.json";
+import LottieShowEtablissementContext from '../../context/LottieShowEtablissementContext';
+import LottieShowConfigContext from '../../context/LottieShowConfigContext';
+
 const Horaires = () => {
     const { userLog, setUserLog } = useContext(UserContext);
+    const { lottieShowEtablissement, setLottieShowEtablissement } = useContext(LottieShowEtablissementContext);
+    const { lottieShowConfig, setLottieShowConfig } = useContext(LottieShowConfigContext);
     const etablissementConfig = useSelector((state) => state.EtablissementConfigReducer);
     const etablissement = useSelector((state) => state.EtablissementReducer);
+
+    const lottieRef = useRef();
+    const lottieRef2 = useRef();
+
 
     const coordinates = new Coordinates(48.93665, 2.51447);
     moment.tz.setDefault("Europe/Paris");
@@ -292,40 +304,65 @@ const Horaires = () => {
                 </div>
                 <img src={`${closestHour == "Dhuhr" ? masjidLayoutF : closestHour == "Asr" ? masjidLayoutD : closestHour == "Maghrib" ? masjidLayoutA : closestHour == "Isha" ? masjidLayoutM : masjidLayoutI}`} alt="" />
                 {
-                    etablissement.idEtablissement
-                    &&
-                    <div className="mosqueeName">
-                        <p>{etablissement.nameEtablissement}</p>
-                    </div>
-                }
-                <div className="countDown">
-                    <div className="circle">
-                        <CircleTime />
-                        <div className="countDownTime">
-                            {
-                                timeToPray
-                                    ?
-                                    currentPray == "Isha"
-                                        ?
-                                        <>
-                                            {timeRemaining} <br />
-                                            <span className="countDownText">avant {closestHour}</span>
-                                        </>
-                                        :
-                                        <>
-                                            Salat <br />
-                                            {currentPray}
-                                        </>
-                                    :
-                                    <>
-                                        {timeRemaining} <br />
-                                        <span className="countDownText">avant {closestHour}</span>
-                                    </>
+                    lottieShowEtablissement
+                        ?
+                        <Player
+                            ref={lottieRef2} // set the ref to your class instance
+                            autoplay={true}
+                            loop={true}
+                            controls={false}
+                            src={lottiePlayer}
+                            style={{ height: "300px", width: "300px" }}
+                        ></Player>
+                        :
 
-                            }
+                        etablissement.idEtablissement
+                        &&
+                        <div className="mosqueeName">
+                            <p>{etablissement.nameEtablissement}</p>
                         </div>
-                    </div>
-                </div>
+                }
+                {
+                    lottieShowConfig
+                        ?
+                        <Player
+                            ref={lottieRef} // set the ref to your class instance
+                            autoplay={true}
+                            loop={true}
+                            controls={false}
+                            src={lottiePlayer}
+                            style={{ height: "300px", width: "300px" }}
+                        ></Player>
+                        :
+                        <div className="countDown">
+                            <div className="circle">
+                                <CircleTime />
+                                <div className="countDownTime">
+                                    {
+                                        timeToPray
+                                            ?
+                                            currentPray == "Isha"
+                                                ?
+                                                <>
+                                                    {timeRemaining} <br />
+                                                    <span className="countDownText">avant {closestHour}</span>
+                                                </>
+                                                :
+                                                <>
+                                                    Salat <br />
+                                                    {currentPray}
+                                                </>
+                                            :
+                                            <>
+                                                {timeRemaining} <br />
+                                                <span className="countDownText">avant {closestHour}</span>
+                                            </>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                }
                 {
                     userLog.isLogged
                     &&
@@ -342,35 +379,49 @@ const Horaires = () => {
                     </div>
                 }
             </div>
-            <div id="salat-hours-page">
-                <div className="hours-container">
-                    <div className="hour-salat fajr">
-                        <span class="name-french">Fajr</span>
-                        <span class="time-salat">{fajr}</span>
-                        <span class="name-arabic">الفجر</span>
+            {
+                lottieShowConfig
+                    ?
+                    <Player
+                        ref={lottieRef} // set the ref to your class instance
+                        autoplay={true}
+                        loop={true}
+                        controls={false}
+                        src={lottiePlayer}
+                        style={{ height: "300px", width: "300px" }}
+                    ></Player>
+                    :
+                    <div id="salat-hours-page">
+
+                        <div className="hours-container">
+                            <div className="hour-salat fajr">
+                                <span class="name-french">Fajr</span>
+                                <span class="time-salat">{fajr}</span>
+                                <span class="name-arabic">الفجر</span>
+                            </div>
+                            <div className="hour-salat dhuhr">
+                                <span class="name-french">Dhuhr</span>
+                                <span class="time-salat">{dhuhr}</span>
+                                <span class="name-arabic">الظهر</span>
+                            </div>
+                            <div className="hour-salat asr">
+                                <span class="name-french">Asr</span>
+                                <span class="time-salat">{asr}</span>
+                                <span class="name-arabic">العصر</span>
+                            </div>
+                            <div className="hour-salat maghrib">
+                                <span class="name-french">Maghrib</span>
+                                <span class="time-salat">{maghrib}</span>
+                                <span class="name-arabic">المغرب</span>
+                            </div>
+                            <div className="hour-salat isha">
+                                <span class="name-french">Isha</span>
+                                <span class="time-salat">{isha}</span>
+                                <span class="name-arabic">العشاء</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="hour-salat dhuhr">
-                        <span class="name-french">Dhuhr</span>
-                        <span class="time-salat">{dhuhr}</span>
-                        <span class="name-arabic">الظهر</span>
-                    </div>
-                    <div className="hour-salat asr">
-                        <span class="name-french">Asr</span>
-                        <span class="time-salat">{asr}</span>
-                        <span class="name-arabic">العصر</span>
-                    </div>
-                    <div className="hour-salat maghrib">
-                        <span class="name-french">Maghrib</span>
-                        <span class="time-salat">{maghrib}</span>
-                        <span class="name-arabic">المغرب</span>
-                    </div>
-                    <div className="hour-salat isha">
-                        <span class="name-french">Isha</span>
-                        <span class="time-salat">{isha}</span>
-                        <span class="name-arabic">العشاء</span>
-                    </div>
-                </div>
-            </div>
+            }
         </>
     )
 }

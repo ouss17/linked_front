@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import Faq from "react-faq-component";
 import { ChevronDown } from '../../assets/Svg/Svg';
@@ -7,20 +7,29 @@ import { useNavigate } from 'react-router';
 import UserContext from '../../context/UserContext';
 import { GetFeedbacksByEtablissement } from '../../Redux/actions/FeedbackAction';
 
+import { Player } from "@lottiefiles/react-lottie-player";
+import lottiePlayer from "../../assets/ressources/lotties/98891-insider-loading.json";
+
 const Feedbacks = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { userLog, setUserLog } = useContext(UserContext);
+    const [lottieShowContent, setLottieShowContent] = useState(true);
+    const lottieRef = useRef();
 
     useEffect(() => {
         if (!userLog.isLogged) {
             navigate('/')
         } else {
-            dispatch(GetFeedbacksByEtablissement(1, userLog.token))
+            dispatch(GetFeedbacksByEtablissement(1, userLog.token)).then(() => {
+                setLottieShowContent(false)
+            })
 
         }
     }, [userLog]);
+
+
     const feedbacks = useSelector((state) => state.FeedbacksByEtablissementReducer);
     const [puclications, setPublications] = useState([]);
 
@@ -62,21 +71,32 @@ const Feedbacks = () => {
             <MetaData title={`Retours d'utilisateurs - Linked`} index="false" />
             <div className="get-actus-page">
                 {
-                    feedbacks.length > 0
+                    lottieShowContent
                         ?
-                        <div style={{ transition: "all 500ms" }} className="blob actus">
-                            <Faq
-                                data={{
-                                    title: "",
-                                    rows: puclications,
-                                }}
-                                styles={styles}
-                                config={config}
-                            />
-                        </div>
-
+                        <Player
+                            ref={lottieRef} // set the ref to your class instance
+                            autoplay={true}
+                            loop={true}
+                            controls={false}
+                            src={lottiePlayer}
+                            style={{ height: "300px", width: "300px" }}
+                        ></Player>
                         :
-                        <p>Il n'y a aucun retour pour le moment.</p>
+                        feedbacks.length > 0
+                            ?
+                            <div style={{ transition: "all 500ms" }} className="blob actus">
+                                <Faq
+                                    data={{
+                                        title: "",
+                                        rows: puclications,
+                                    }}
+                                    styles={styles}
+                                    config={config}
+                                />
+                            </div>
+
+                            :
+                            <p>Il n'y a aucun retour pour le moment.</p>
                 }
             </div>
 

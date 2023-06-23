@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import useModal from '../../components/Modal/useModal';
 import { Pen, Trash } from '../../assets/Svg/Svg';
 import ReactTable from '../../components/ReactTable';
@@ -10,6 +10,8 @@ import UserContext from '../../context/UserContext';
 import { useNavigate } from 'react-router';
 import FormActus from './FormActus';
 import { GetCategories } from '../../Redux/actions/CategoryAction';
+import { Player } from "@lottiefiles/react-lottie-player";
+import lottiePlayer from "../../assets/ressources/lotties/98891-insider-loading.json";
 
 const AllActus = () => {
 
@@ -37,10 +39,16 @@ const AllActus = () => {
         activeActus: true,
     });
 
+    const [lottieShowContent, setLottieShowContent] = useState(true);
+    const lottieRef = useRef();
+
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(GetCategories()).then(() => {
-            dispatch(GetAllActusByEtablissement(1, userLog.token));
+            dispatch(GetAllActusByEtablissement(1, userLog.token)).then(() => {
+                setLottieShowContent(false);
+            });
         })
     }, [])
 
@@ -373,13 +381,26 @@ const AllActus = () => {
                     <Trash />
                 </span>
             </p>
-            <ReactTable
-                data={data}
-                columns={columns}
-                isResizable
-                defaultColumn={defaultColumn}
-                getRowProps={onRowClick}
-            />
+            {
+                lottieShowContent
+                    ?
+                    <Player
+                        ref={lottieRef} // set the ref to your class instance
+                        autoplay={true}
+                        loop={true}
+                        controls={false}
+                        src={lottiePlayer}
+                        style={{ height: "300px", width: "300px" }}
+                    ></Player>
+                    :
+                    <ReactTable
+                        data={data}
+                        columns={columns}
+                        isResizable
+                        defaultColumn={defaultColumn}
+                        getRowProps={onRowClick}
+                    />
+            }
         </>
     )
 }

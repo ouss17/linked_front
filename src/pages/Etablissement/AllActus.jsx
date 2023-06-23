@@ -192,28 +192,28 @@ const AllActus = () => {
                 if (res.status !== 201) {
 
                 } else {
-                    // if (inputState.idCategory == "/apiLinked/categories/1") {
+                    if (inputState.idCategory == "apiLinked/categories/1") {
 
-                    //     const options = {
-                    //         method: 'POST',
-                    //         headers: {
-                    //             accept: 'application/json',
-                    //             'Content-Type': 'application/json',
-                    //             Authorization: 'Basic YjFmMjQ0ODctZWQwNS00ODRhLTllNDItNGRkYzEwYjQyMjc3',
-                    //         },
-                    //         body: JSON.stringify({
-                    //             app_id: 'a3e4c38d-9275-4c55-a9fb-b32bc9de8f3c',
-                    //             included_segments: ['Subscribed Users'],
-                    //             contents: { en: 'new publication', fr: 'Nouvelle publication' },
-                    //             name: 'Event Notif',
-                    //         })
-                    //     };
+                        const options = {
+                            method: 'POST',
+                            headers: {
+                                accept: 'application/json',
+                                'Content-Type': 'application/json',
+                                Authorization: 'Basic YjFmMjQ0ODctZWQwNS00ODRhLTllNDItNGRkYzEwYjQyMjc3',
+                            },
+                            body: JSON.stringify({
+                                app_id: 'a3e4c38d-9275-4c55-a9fb-b32bc9de8f3c',
+                                included_segments: ['Subscribed Users'],
+                                contents: { en: 'new publication', fr: 'Nouvelle publication' },
+                                name: 'Event Notif',
+                            })
+                        };
 
-                    //     fetch('https://onesignal.com/api/v1/notifications', options)
-                    //         .then(response => response.json())
-                    //         .then(response => console.log(response))
-                    //         .catch(err => console.error(err));
-                    // }
+                        fetch('https://onesignal.com/api/v1/notifications', options)
+                            .then(response => response.json())
+                            .then(response => console.log(response))
+                            .catch(err => console.error(err));
+                    }
                 }
             });
             emptyValue();

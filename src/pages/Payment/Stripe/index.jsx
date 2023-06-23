@@ -42,6 +42,33 @@ const PaymentForm = () => {
             amount: "",
         });
     };
+
+    const [disableButton, setDisableButton] = useState(true);
+
+    useEffect(() => {
+        if (elements !== null) {
+
+            const cardNumberElement = elements.getElement(CardElement);
+
+            const cardNumberChangeHandler = (event) => {
+                if (inputForm.amount.trim() !== "") {
+                    setDisableButton(!event.complete);
+                } else {
+                    setDisableButton(true)
+                }
+            };
+
+            cardNumberElement.addEventListener('change', cardNumberChangeHandler);
+
+
+            return () => {
+                cardNumberElement.removeEventListener('change', cardNumberChangeHandler);
+            };
+        } else {
+            setDisableButton(true)
+        }
+    }, [elements, inputForm]);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -55,9 +82,6 @@ const PaymentForm = () => {
             // Envoyer les détails de paiement au backend
             body: JSON.stringify({
                 amount: parseFloat(inputForm.amount) * 100,
-                username: userLog.username,
-                email: userLog.emailUser,
-                mosquee: "mosquée Al Rahma"
             }),
         });
         console.log(response);
@@ -123,7 +147,7 @@ const PaymentForm = () => {
                             <CardElement className='stripe-element' />
                         </div>
                     </div>
-                    <button type="submit" className='button' id="logIn">
+                    <button disabled={disableButton} type="submit" className='button' id="logIn">
                         <span>Faire un don</span>
                     </button>
                 </form>

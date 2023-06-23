@@ -25,6 +25,16 @@ const ChangePassword = () => {
         password: "",
     });
 
+    const [disableButton, setDisableButton] = useState(true);
+    useEffect(() => {
+        if (inputForm.username.trim() !== "" && inputForm.password.trim() !== "") {
+            setDisableButton(false);
+        } else {
+            setDisableButton(true)
+        }
+    }, [inputForm]);
+
+
     useEffect(() => {
         if (userLog.isLogged) {
             setInputForm({ ...inputForm, username: userLog.username })
@@ -92,7 +102,7 @@ const ChangePassword = () => {
                     </div>
                 </div>
                 <div className="actionsForm">
-                    <button className="button" role='button' onClick={(e) => logUser(e)} id="logIn">
+                    <button disabled={disableButton} className="button" role='button' onClick={(e) => logUser(e)} id="logIn">
                         <span>Changer le mot de passe</span>
                         <svg className="icons" id="loginFail" viewBox="0 0 15 15">
                             <polyline points="0 0 15 15"></polyline>

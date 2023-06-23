@@ -17,10 +17,6 @@ const Horaires = () => {
     const etablissementConfig = useSelector((state) => state.EtablissementConfigReducer);
     const etablissement = useSelector((state) => state.EtablissementReducer);
 
-    useEffect(() => {
-        console.log(userLog);
-    }, [userLog]);
-
     const coordinates = new Coordinates(48.93665, 2.51447);
     moment.tz.setDefault("Europe/Paris");
     const [hijriDate, setHijriDate] = useState(new Intl.DateTimeFormat('ar-TN-u-ca-islamic', { day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' }).format(Date.now()));

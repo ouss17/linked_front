@@ -35,10 +35,20 @@ const AskGestion = () => {
             phone: "",
         });
     };
+    const [regex] = useState(/^(0[67]\d{8}|\+33[67]\d{8})$/);
+
+    const [disableButton, setDisableButton] = useState(true);
+    useEffect(() => {
+        if (inputForm.phone.trim() !== "" && regex.test(inputForm.phone)) {
+            setDisableButton(false);
+        } else {
+            setDisableButton(true)
+        }
+    }, [inputForm]);
+
 
     const sendAsk = (e) => {
         e.preventDefault();
-        let regex = /^(0[67]\d{8}|\+33[67]\d{8})$/;
         if (inputForm.phone.trim() !== "") {
             if (regex.test(inputForm.phone)) {
                 dispatch(SendMail({
@@ -81,7 +91,7 @@ const AskGestion = () => {
                     </div>
                 </div>
                 <div className="actionsForm">
-                    <button className="button" role='button' onClick={(e) => sendAsk(e)} id="logIn">
+                    <button disabled={disableButton} className="button" role='button' onClick={(e) => sendAsk(e)} id="logIn">
                         <span>Faire ma demande</span>
                         <svg className="icons" id="loginFail" viewBox="0 0 15 15">
                             <polyline points="0 0 15 15"></polyline>

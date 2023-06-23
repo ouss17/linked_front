@@ -43,7 +43,6 @@ const Menu = () => {
 
     useEffect(() => {
         let currentId = null;
-        console.log(location);
         if (location.pathname.includes("/actus")) {
             setMenuActive("actus");
             currentId = document.getElementById("actus");

@@ -30,11 +30,20 @@ const LoginUser = () => {
         return false;
     };
 
+    const [disableButton, setDisableButton] = useState(true);
     const [msgError, setMsgError] = useState("");
     const [inputForm, setInputForm] = useState({
         username: "",
         password: "",
     });
+
+    useEffect(() => {
+        if (inputForm.username.trim() !== "" && inputForm.password.trim() !== "") {
+            setDisableButton(false);
+        } else {
+            setDisableButton(true)
+        }
+    }, [inputForm]);
 
     const handleChangeInput = (e) => {
         let name = e.target.name;
@@ -72,7 +81,6 @@ const LoginUser = () => {
                 }, 5000);
             } else {
                 Cookies.set(USER_CONNECTED_STORAGE, res.data.token, { expires: 30 });
-                Cookies.set(USER_CONNECTED_STORAGE + 'e', res.data.emailUser, { expires: 30 });
                 setSuccessAction(true)
                 dispatch(GetMe({}, res.data.token)).then((res2) => {
                     console.log(res2);
@@ -80,18 +88,12 @@ const LoginUser = () => {
                         setUserLog({
                             id: res2.idUser,
                             username: res2.nameUser,
-                            role: res2.roles,
+                            role: res2.idRole,
                             paymentCards: res2.paymentCards,
                             idEtablissement: res2.idEtablissement,
-                            emailUser: res.data.emailUser,
+                            emailUser: res2.userEmail,
                             isLogged: true,
                         })
-                        // let decodedUser = Buffer.from(user, "base64").toString("utf-8");
-                        // decodedUser = JSON.parse(decodedUser);
-                        // setState((prevState) => ({
-                        //   ...prevState,
-                        //   ...decodedUser,
-                        // }));
                     }
                 })
                 setTimeout(() => {
@@ -133,7 +135,7 @@ const LoginUser = () => {
                     <Link to="/settings/register">Pas de compte ? Enregistrez-vous ici !</Link>
                 </div>
                 <div className="actionsForm">
-                    <button className="button" role='button' onClick={(e) => logUser(e)} id="logIn">
+                    <button disabled={disableButton} className="button" role='button' onClick={(e) => logUser(e)} id="logIn">
                         <span>Se connecter</span>
                         <svg className="icons" id="loginFail" viewBox="0 0 15 15">
                             <polyline points="0 0 15 15"></polyline>

@@ -83,8 +83,6 @@ const NewPassword = () => {
             }
         });
         if (inputForm.newPassword == inputForm.confirmNewPassword) {
-            console.log(inputForm.newPassword);
-            console.log(inputForm.confirmNewPassword);
 
             dispatch(ChangePass(inputForm, userLog.token)).then(res => {
                 console.log(res);

@@ -36,6 +36,15 @@ const CreateUser = () => {
         password: "",
     });
 
+    const [disableButton, setDisableButton] = useState(true);
+    useEffect(() => {
+        if (inputForm.username.trim() !== "" && inputForm.password.trim() !== "" && inputForm.nameUser.trim() !== "") {
+            setDisableButton(false);
+        } else {
+            setDisableButton(true)
+        }
+    }, [inputForm]);
+
     const [error, setError] = useState({ name: "", message: "" });
 
     const handleChangeInput = (e) => {
@@ -126,7 +135,7 @@ const CreateUser = () => {
                     </div>
                 </div>
                 <div className="actionsForm">
-                    <button className="button" role='button' onClick={(e) => saveUser(e)} id="logIn">
+                    <button disabled={disableButton} className="button" role='button' onClick={(e) => saveUser(e)} id="logIn">
                         <span>S'enregistrer</span>
                     </button>
                 </div>

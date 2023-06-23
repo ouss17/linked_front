@@ -6,9 +6,6 @@ import ChargeContext from "../../context/ChargeContext";
 const Layout = () => {
     const location = useLocation();
     const { charge, setCharge } = useContext(ChargeContext);
-    useEffect(() => {
-        console.log(charge);
-    }, [charge]);
 
     return (
         <div id="container">

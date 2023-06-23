@@ -22,6 +22,16 @@ const Feedback = () => {
         titleFeedback: "",
         detailFeedback: "",
     })
+
+    const [disableButton, setDisableButton] = useState(true);
+    useEffect(() => {
+        if (inputForm.titleFeedback.trim() !== "" && inputForm.detailFeedback.trim() !== "") {
+            setDisableButton(false);
+        } else {
+            setDisableButton(true)
+        }
+    }, [inputForm]);
+
     useEffect(() => {
         if (!userLog.isLogged) {
             navigate('/')
@@ -104,7 +114,7 @@ const Feedback = () => {
                     </div>
                 </div>
                 <div className="actionsForm">
-                    <button className="button" role='button' onClick={(e) => SendFeedback(e)} id="logIn">
+                    <button disabled={disableButton} className="button" role='button' onClick={(e) => SendFeedback(e)} id="logIn">
                         <span>Envoyer</span>
                         <svg className="icons" id="loginFail" viewBox="0 0 15 15">
                             <polyline points="0 0 15 15"></polyline>

@@ -14,11 +14,6 @@ const Settings = () => {
             sameSite: "Lax",
             secure: true,
         });
-        Cookies.remove(USER_CONNECTED_STORAGE + 'e', {
-            path: "/",
-            sameSite: "Lax",
-            secure: true,
-        });
         setUserLog({
             id: "",
             username: "",
@@ -48,7 +43,7 @@ const Settings = () => {
                     &&
                     userLog.idEtablissement !== null
                     &&
-                    userLog.role.includes("ROLE_GERANT")
+                    userLog.role.idRole == 3
                     &&
                     <Link to="/settings/etablissement" className="setting" id="login">
                         <h2 className="title titleThird"><MultipleGear /> Gestion de l'établissement</h2>
@@ -58,7 +53,7 @@ const Settings = () => {
                 {
                     userLog.isLogged
                     &&
-                    userLog.role.includes("ROLE_ADMIN")
+                    userLog.role.idRole == 1
                     &&
                     <Link to="/settings/admin" className="setting" id="login">
                         <h2 className="title titleThird"><MultipleGear /> Admin</h2>

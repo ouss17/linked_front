@@ -618,6 +618,7 @@ body {
   appearance: none;
   -webkit-appearance: none;
   color: #fff;
+  transition: all 500ms;
 }
 
 .button:before,
@@ -638,6 +639,11 @@ body {
   transform-origin: 50% 50%;
   transition: width 0.3s, height 0.3s, border-radius 0.2s, background 0.3s;
   transition-delay: 0.2s, 0.2s, 0.2s, 0.2s;
+}
+
+.button[disabled]:before {
+  background-color: #cccccc;
+  color: #666666;
 }
 
 .button:after {

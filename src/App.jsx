@@ -172,7 +172,6 @@ const App = () => {
     let serverAuthentifier = document.querySelector("[data-is-authenticated]");
 
     let user = Cookies.get(USER_CONNECTED_STORAGE);
-    let userE = Cookies.get(USER_CONNECTED_STORAGE + 'e');
 
     if (user) {
       dispatch(GetMe({}, user)).then((res) => {
@@ -181,10 +180,10 @@ const App = () => {
           setUserLog({
             id: res.idUser,
             username: res.nameUser,
-            role: res.roles,
+            role: res.idRole,
             paymentCards: res.paymentCards,
             idEtablissement: res.idEtablissement,
-            emailUser: userE,
+            emailUser: res.userEmail,
             isLogged: true,
             token: user
           })
@@ -196,11 +195,6 @@ const App = () => {
           // }));
         } else {
           Cookies.remove(USER_CONNECTED_STORAGE, {
-            path: "/",
-            sameSite: "Lax",
-            secure: true,
-          });
-          Cookies.remove(USER_CONNECTED_STORAGE + 'e', {
             path: "/",
             sameSite: "Lax",
             secure: true,

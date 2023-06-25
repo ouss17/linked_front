@@ -36,7 +36,7 @@ const Users = () => {
     const [inputState, setInputState] = useState({
         idEtablissement: ``,
         idRole: ``,
-        username: "",
+        userEmail: "",
         nameUser: "",
     });
 
@@ -65,7 +65,7 @@ const Users = () => {
         setInputState({
             idEtablissement: ``,
             idRole: ``,
-            username: "",
+            userEmail: "",
             nameUser: "",
         });
     };
@@ -134,8 +134,9 @@ const Users = () => {
             idUser: cell.row.original.idUser,
             idEtablissement: cell.row.original.idEtablissement,
             idCategory: cell.row.original.idCategory,
-            username: cell.row.original.username,
+            userEmail: cell.row.original.userEmail,
             nameUser: cell.row.original.nameUser,
+            idRole: cell.row.original.idRole
         });
         setError([])
         dragDown();
@@ -155,7 +156,7 @@ const Users = () => {
             idUser: cell.row.original.idUser,
             idEtablissement: cell.row.original.idEtablissement,
             idCategory: cell.row.original.idCategory,
-            username: cell.row.original.username,
+            userEmail: cell.row.original.userEmail,
             nameUser: cell.row.original.nameUser,
         });
 
@@ -183,7 +184,7 @@ const Users = () => {
     const configUser = () => {
         if (state.action == "update") {
 
-            dispatch(UpdateUser(inputState, userLog.token));
+            dispatch(UpdateUser({ ...inputState, roles: inputState.idRole == "apiLinked/roles/1" ? ["ROLE_ADMIN"] : inputState.idRole == "apiLinked/roles/2" ? ["ROLE_USER"] : ["ROLE_GERANT"] }, userLog.token));
             emptyValue();
             dragUp();
 
@@ -257,7 +258,7 @@ const Users = () => {
             },
             {
                 Header: 'Email',
-                accessor: 'username',
+                accessor: 'userEmail',
             },
             {
                 Header: 'Pseudo',

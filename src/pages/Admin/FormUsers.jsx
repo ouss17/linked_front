@@ -52,7 +52,7 @@ const FormUsers = ({ action, inputData, inputChange, selectedActus, roles, etabl
         }
     }, [etablissements.length])
 
-    const { nameUser, username, idRole, } =
+    const { nameUser, userEmail, idRole, } =
         inputData;
 
     // const ovh = useOvhStorageCredentials();
@@ -70,7 +70,7 @@ const FormUsers = ({ action, inputData, inputChange, selectedActus, roles, etabl
 
     const [focus, setFocus] = useState({
         nameUser: false,
-        username: false,
+        userEmail: false,
         idRole: false,
         idEtablissement: false,
     });
@@ -105,7 +105,7 @@ const FormUsers = ({ action, inputData, inputChange, selectedActus, roles, etabl
                                     value={actu.idRole}
                                 />
                             </div>
-                            <div style={{ marginRight: "5px" }}>{actu.username.length > 20 ? actu.username.substring(0, 20) + "..." : actu.username}</div>
+                            <div style={{ marginRight: "5px" }}>{actu.userEmail.length > 20 ? actu.userEmail.substring(0, 20) + "..." : actu.userEmail}</div>
                         </li>
                     ))}
 
@@ -126,6 +126,7 @@ const FormUsers = ({ action, inputData, inputChange, selectedActus, roles, etabl
                         type="text"
                         id="nameUser"
                         autoComplete="off"
+                        disabled
                         // className="form-elem"
                         name="nameUser"
                         onFocus={() => setFocus({ ...focus, nameUser: true })}
@@ -134,21 +135,22 @@ const FormUsers = ({ action, inputData, inputChange, selectedActus, roles, etabl
                         value={nameUser}
                     />
                 </div>
-                <label htmlFor="username">Email: </label>
-                <div className={`form-elem w-100 ${showErrorMessage("username") ? "input-error" : ""
+                <label htmlFor="userEmail">Email: </label>
+                <div className={`form-elem w-100 ${showErrorMessage("userEmail") ? "input-error" : ""
                     }`}
-                    isFocus={focus.username}
+                    isFocus={focus.userEmail}
                     focusColor="var(--main-color)">
                     <input
                         type="text"
-                        id="username"
+                        id="userEmail"
                         autoComplete="off"
+                        disabled
                         // className="form-elem"
-                        name="username"
-                        onFocus={() => setFocus({ ...focus, username: true })}
-                        onBlur={() => setFocus({ ...focus, username: false })}
+                        name="userEmail"
+                        onFocus={() => setFocus({ ...focus, userEmail: true })}
+                        onBlur={() => setFocus({ ...focus, userEmail: false })}
                         onChange={inputChange}
-                        value={username}
+                        value={userEmail}
                     />
                 </div>
 

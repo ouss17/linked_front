@@ -93,6 +93,7 @@ const LoginUser = () => {
                             idEtablissement: res2.idEtablissement,
                             emailUser: res2.userEmail,
                             isLogged: true,
+                            token: res.data.token
                         })
                     }
                 })

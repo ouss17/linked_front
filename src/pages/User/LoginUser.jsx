@@ -103,7 +103,6 @@ const LoginUser = () => {
                 }, 3000);
             }
         })
-        emptyValue();
     }
 
     return (

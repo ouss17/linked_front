@@ -81,7 +81,6 @@ const ChangePassword = () => {
                 navigate("/settings/newPassword");
             }
         })
-        emptyValue();
     }
 
     return (

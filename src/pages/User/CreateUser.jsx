@@ -94,7 +94,6 @@ const CreateUser = () => {
                 }
             })
             setMsgEmail("");
-            emptyValue();
         } else {
             if (inputForm.username.match(emailRegex) == null) {
                 setMsgEmail("Veuillez entrer une adresse email valide");

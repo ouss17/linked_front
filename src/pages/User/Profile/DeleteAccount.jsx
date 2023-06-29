@@ -111,7 +111,6 @@ const DeleteAccount = () => {
                 })
             }
         })
-        emptyValue();
     }
     return (
         <>

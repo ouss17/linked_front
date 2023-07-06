@@ -2,6 +2,10 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^linked\.oussdiarra\.com [NC]
+RewriteRule ^(.*)$ https://www.linked.oussdiarra.com/$1 [L,R=301]
+
 
 Options -MultiViews
 RewriteBase /
